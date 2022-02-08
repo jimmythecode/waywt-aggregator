@@ -12,7 +12,10 @@ logAdminExternal({
   rest: process.env,
 });
 if (typeof googleAnalyticsTrackingCode === 'string') {
-  ReactGA.initialize(googleAnalyticsTrackingCode);
+  ReactGA.initialize(googleAnalyticsTrackingCode, {
+    debug: true,
+    titleCase: false,
+  });
 } else throw new Error('THERE IS NO ENV VARIABLE FOR GOOGLE ANALYTICS');
 
 function App() {
@@ -20,8 +23,8 @@ function App() {
 
 
   useEffect(() => {
-    logAdminExternal('page changed!');
-    logAdminExternal(location);
+    console.log('page changed!', window.location.pathname + window.location.search);
+    console.log(location);
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, [location.pathname]);
 
