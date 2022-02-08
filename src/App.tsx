@@ -6,7 +6,7 @@ import TestsPage from './pages/Tests/TestsPage';
 import Drawer from './components/Drawer';
 import { logAdminExternal } from './utils/logging';
 
-const googleAnalyticsTrackingCode = process.env.REACT_APP_GA_TRACKING_CODE;
+const googleAnalyticsTrackingCode = process.env.REACT_APP_GA_TRACKING_CODE3;
 logAdminExternal({
   googleAnalyticsTrackingCode,
   rest: process.env,
