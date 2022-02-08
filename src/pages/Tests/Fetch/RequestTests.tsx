@@ -3,7 +3,7 @@ import { Box, Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { fetchGetBase, fetchPostBase } from './fetchRequests';
-import { logAdminExternal } from '../../utils/logging';
+import { logAdminExternal } from '../../../utils/logging';
 
 const url = 'https://api.publicapis.org/entries';
 function RequestTests() {
@@ -45,7 +45,7 @@ function RequestTests() {
       .then((parsedResponse) => {
         enqueueSnackbar('fetch paring!', { variant: 'success' });
         logAdminExternal(parsedResponse);
-        setGetResponseState(parsedResponse as unknown as {status: string});
+        setGetResponseState(parsedResponse as unknown as { status: string });
       })
       .catch((error) => {
         console.error(error);
@@ -55,15 +55,16 @@ function RequestTests() {
 
   return (
     <div>
-      <button type='button' 
-      onClick={() => setGetStringState("https://api.publicapis.org/entries")}
-      >
-      https://api.publicapis.org/entries
+      <button type='button' onClick={() => setGetStringState('https://api.publicapis.org/entries')}>
+        https://api.publicapis.org/entries
       </button>
-      <button type='button' 
-      onClick={() => setGetStringState("https://todoapi20220120072839.azurewebsites.net/api/todoitems")}
+      <button
+        type='button'
+        onClick={() =>
+          setGetStringState('https://todoapi20220120072839.azurewebsites.net/api/todoitems')
+        }
       >
-      https://todoapi20220120072839.azurewebsites.net/api/todoitems
+        https://todoapi20220120072839.azurewebsites.net/api/todoitems
       </button>
       <Box
         sx={{

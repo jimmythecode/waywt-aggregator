@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 // import { UserAgent } from 'react-useragent';
 import * as ReactDeviceDetect from 'react-device-detect';
-import Pretty from '../../components/Pretty';
+import Pretty from '../../../components/Pretty';
 
 function Analytics() {
   const [ipAddressResponse, setIpAddressResponse] = useState({});

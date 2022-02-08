@@ -1,4 +1,4 @@
-import { logAdminExternal } from '../../utils/logging';
+import { logAdminExternal } from '../../../utils/logging';
 
 const domainUrl = '';
 

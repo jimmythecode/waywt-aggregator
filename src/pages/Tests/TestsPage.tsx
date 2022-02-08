@@ -1,7 +1,8 @@
 import { Box, Tab, Tabs, Typography } from '@mui/material';
 import React, { useCallback, useState } from 'react';
-import Analytics from './Analytics';
-import RequestTests from './RequestTests';
+import Analytics from './Analytics/Analytics';
+import RequestTests from './Fetch/RequestTests';
+import Router from './Router/RouterTests';
 
 function a11yProps(index: number) {
   return {
@@ -41,7 +42,7 @@ TabPanel.defaultProps = {
 };
 
 function TestsPage() {
-  const [tabNumber, setTabNumber] = useState(0);
+  const [tabNumber, setTabNumber] = useState(2);
 
   const handleChange = useCallback(
     (event: React.SyntheticEvent, newValue: number) => {
@@ -66,7 +67,7 @@ function TestsPage() {
         <RequestTests />
       </TabPanel>
       <TabPanel value={tabNumber} index={2}>
-        Item Three
+        <Router />
       </TabPanel>
     </div>
   );
