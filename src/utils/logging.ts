@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 export type LogAdmin = (...args: unknown[]) => void;
 
 const css = `color: blue`;

@@ -1,8 +1,9 @@
-import { Box, Button, Input, TextField } from '@mui/material';
+/* eslint-disable no-console */
+import { Box, Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { SnackbarProvider, VariantType, useSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
 import { fetchGetBase, fetchPostBase } from './fetchRequests';
-import { logAdminExternal } from './utils/logging';
+import { logAdminExternal } from '../../utils/logging';
 
 const url = 'https://api.publicapis.org/entries';
 function RequestTests() {

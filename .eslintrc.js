@@ -41,6 +41,7 @@ module.exports = {
         indent: 'off',
         // 'prettier/prettier': ['warn'],
         'no-unused-expressions': ['warn'],
+        "react/jsx-props-no-spreading": ["off"],
     },
     settings: {
         'import/resolver': {
