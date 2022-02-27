@@ -42,6 +42,8 @@ module.exports = {
         // 'prettier/prettier': ['warn'],
         'no-unused-expressions': ['warn'],
         "react/jsx-props-no-spreading": ["off"],
+        "import/prefer-default-export": ["warn"],
+        "react/jsx-curly-brace-presence": ["warn"]
     },
     settings: {
         'import/resolver': {

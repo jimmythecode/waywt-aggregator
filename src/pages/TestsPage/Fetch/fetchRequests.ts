@@ -10,7 +10,7 @@ function getRequestHeaders() {
     // requestHeaders.set('jwt_token', localStorage.getItem('session-token') as string);
     return requestHeaders;
 }
-export function fetchGetBase(url: string) {
+export function fetchGetBase(url: string) { // url must start with /
     // eslint-disable-next-line no-unused-expressions
     logAdminExternal('fetch GET to:', `${domainUrl}${url}`);
     return fetch(`${domainUrl}${url}`, {

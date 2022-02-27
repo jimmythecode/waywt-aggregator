@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+// ts-ignore no-console 
 export type LogAdmin = (...args: unknown[]) => void;
 
 const css = `color: blue`;

@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Tab, Tabs, Toolbar, Typography } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import Analytics from './Analytics/Analytics';
 import RequestTests from './Fetch/RequestTests';
@@ -42,7 +42,7 @@ TabPanel.defaultProps = {
 };
 
 function TestsPage() {
-  const [tabNumber, setTabNumber] = useState(2);
+  const [tabNumber, setTabNumber] = useState(1);
 
   const handleChange = useCallback(
     (event: React.SyntheticEvent, newValue: number) => {
@@ -52,12 +52,13 @@ function TestsPage() {
   );
 
   return (
-    <div>
+    <Box>
+      <Toolbar/>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={tabNumber} onChange={handleChange} aria-label='basic tabs example'>
-          <Tab label='Item One' {...a11yProps(0)} />
-          <Tab label='Item Two' {...a11yProps(1)} />
-          <Tab label='Item Three' {...a11yProps(2)} />
+          <Tab label='Analytics' {...a11yProps(0)} />
+          <Tab label='Requests' {...a11yProps(1)} />
+          <Tab label='Hooks' {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={tabNumber} index={0}>
@@ -69,7 +70,7 @@ function TestsPage() {
       <TabPanel value={tabNumber} index={2}>
         <Router />
       </TabPanel>
-    </div>
+    </Box>
   );
 }
 

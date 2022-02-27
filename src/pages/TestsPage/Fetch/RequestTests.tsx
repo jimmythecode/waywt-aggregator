@@ -4,8 +4,129 @@ import React, { useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { fetchGetBase, fetchPostBase } from './fetchRequests';
 import { logAdminExternal } from '../../../utils/logging';
+import { DeviceData, fetchIpApiObject, GeolocationResponse } from '../../../utils/analytics';
 
-const url = 'https://api.publicapis.org/entries';
+const url = 'https://todoapi20220120072839.azurewebsites.net/api/todoitems';
+// const url = 'https://api.publicapis.org/entries';
+
+function PostInitialAndInterval() {
+  const { enqueueSnackbar } = useSnackbar();
+  const [responseBody, setResponseBody] = React.useState({});
+
+  const dummyIpApiObject: DeviceData = {
+    browserName: 'browserName',
+    deviceType: 'deviceType',
+    getUA: 'getUA',
+    mobileModel: 'mobileModel',
+    mobileVendor: 'mobileVendor',
+    osName: 'osName,u',
+  };
+
+  const dummyGeolocationObject: fetchIpApiObject = {
+    ip: 'dummy IP address string, eg 00.000.00.000',
+  };
+
+  const dummyDeviceDataObject: GeolocationResponse = {
+    country_code: 'country code',
+    country_name: 'country name',
+    city: 'city',
+    postal: 'postal',
+    latitude: 1,
+    longitude: 1,
+    IPv4: 'ipv4',
+    state: 'state',
+  };
+
+  const initialBodyObject = {
+    dummyIpApiObject,
+    dummyGeolocationObject,
+    dummyDeviceDataObject,
+  };
+  const intervalBodyObject = {
+    sessionId: 1,
+    secondsPassed: 15,
+    logOfUserActions: [{
+      localLogId: 1,
+      localTimestamp: new Date().toISOString(),
+      action: 'dummy action for test',
+    }],
+  };
+
+  async function fetchPostButtonClicked(subdirectories: string, postObject: string): Promise<void> {
+    enqueueSnackbar('fetch sending!', { variant: 'info' });
+    fetchPostBase(`${url}${subdirectories}`, postObject)
+      .then((response) => {
+        enqueueSnackbar('We got a response!', { variant: 'info' });
+        return response.json();
+      })
+      .then((parsedResponse) => {
+        logAdminExternal(parsedResponse);
+        enqueueSnackbar('We parsed!', { variant: 'success' });
+        setResponseBody(parsedResponse);
+      })
+      .catch((error) => {
+        console.error(error);
+        enqueueSnackbar('error sending request. See console', { variant: 'error' });
+      });
+  }
+  return (
+    <Box
+      sx={{
+        border: 'solid 1px silver',
+        borderRadius: '10px',
+        padding: 3,
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: 100,
+        }}
+      >
+        <Button
+          sx={{ minWidth: 200 }}
+          onClick={() =>
+            fetchPostButtonClicked('/analytics/initial', JSON.stringify(initialBodyObject))
+          }
+          variant='contained'
+          color='secondary'
+        >
+          POST INITIAL
+        </Button>
+
+        <Button
+          sx={{ minWidth: 200 }}
+          onClick={() =>
+            fetchPostButtonClicked('/analytics/interval', JSON.stringify(intervalBodyObject))
+          }
+          variant='contained'
+          color='secondary'
+        >
+          POST INTERVAL
+        </Button>
+      </Box>
+      <Box
+        sx={{
+          border: 'solid 1px silver',
+          borderRadius: '10px',
+          // padding: 1,
+          marginLeft: 1,
+          overflow: 'auto',
+          height: 120,
+          boxSizing: 'border-box',
+          flex: 'auto',
+        }}
+      >
+        <p style={{ margin: 8, width: '100%' }}>{JSON.stringify(responseBody)}</p>
+      </Box>
+    </Box>
+  );
+}
+
 function RequestTests() {
   const { enqueueSnackbar } = useSnackbar();
   const [getStringState, setGetStringState] = useState(url);
@@ -14,8 +135,6 @@ function RequestTests() {
   const [postResponseState, setPostResponseState] = useState({
     status: 'Request Not Yet Triggered',
   });
-
-  // const url = "https://todoapi20220120072839.azurewebsites.net/api/todoitems";
 
   async function fetchPostButtonClicked() {
     enqueueSnackbar('fetch sending!', { variant: 'info' });
@@ -66,6 +185,7 @@ function RequestTests() {
       >
         https://todoapi20220120072839.azurewebsites.net/api/todoitems
       </button>
+      {/* GET Request */}
       <Box
         sx={{
           border: 'solid 1px silver',
@@ -116,7 +236,7 @@ function RequestTests() {
           <p style={{ margin: 8, width: '100%' }}>{JSON.stringify(getResponseState)}</p>
         </Box>
       </Box>
-
+      {/* Post Request with foo:bar */}
       <Box
         sx={{
           border: 'solid 1px silver',
@@ -170,6 +290,7 @@ function RequestTests() {
           <p style={{ margin: 8, width: '100%' }}>{JSON.stringify(postResponseState)}</p>
         </Box>
       </Box>
+      <PostInitialAndInterval />
     </div>
   );
 }
