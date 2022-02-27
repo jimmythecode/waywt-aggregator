@@ -483,7 +483,7 @@ function InfoSection({ postObject }: { postObject: PostObject }) {
   );
 }
 
-export default function ResultCard({ postObject }: { postObject: PostObject }) {
+function ResultCard({ postObject }: { postObject: PostObject }) {
   const imageUrl = postObject.images[0];
   const imageUrlExtention = imageUrl.split('.').pop() === 'jpg' ? imageUrl : `${imageUrl}.jpg`;
 
@@ -546,3 +546,5 @@ export default function ResultCard({ postObject }: { postObject: PostObject }) {
     </Box>
   );
 }
+
+export default React.memo(ResultCard)

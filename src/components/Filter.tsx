@@ -1,3 +1,4 @@
+import React, { SyntheticEvent, useContext, useState } from 'react';
 import {
   Box,
   Button,
@@ -9,11 +10,13 @@ import {
   Toolbar,
 } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import React, { SyntheticEvent, useContext, useState } from 'react';
 import { SearchContext } from '../Context/SearchContext';
 import { LoggingContext } from '../Context/LoggingContext';
+import FilterCheckboxes from './FilterCheckboxes';
+import { logAdminExternal } from '../utils/logging';
+import { GlobalContext } from '../Context/GlobalContext';
 
-function Filter() {
+function Filter({origin}: {origin:string}) {
   const {
     updateResults,
     styleFilterObject,
@@ -22,8 +25,13 @@ function Filter() {
     resultsUpToDate,
     initialFilteredPostsObjects,
   } = useContext(SearchContext);
+  const { filterMobileOpen } = React.useContext(GlobalContext);
   const { updateLog } = useContext(LoggingContext);
   const [dropDownOpen, setDropDownOpen] = useState(true);
+
+  // I want filterMobileOpen in state so that filter still renders when I slide window width back and forth
+  const doNothing = ()=> "nothing"
+  if (filterMobileOpen){doNothing()}
 
   return (
     <Box>
@@ -51,52 +59,10 @@ function Filter() {
         Styles
       </Button>
       <Collapse in={dropDownOpen}>
-        <FormGroup sx={{ marginLeft: '16px' }}>
-          <FormControlLabel // Select all checkbox
-            control={
-              <Checkbox
-                checked={!Object.values(styleFilterObject).some((x) => x.checked === false)}
-                onChange={(event: SyntheticEvent<Element, Event>, checked: boolean) => {
-                  updateLog(`Clicked Checkbox for '${'Select All'}'`);
-                  setStyleFilterObject((prev) => {
-                    const returnObj = { ...prev };
-                    Object.keys(prev).forEach((label) => {
-                      returnObj[label].checked = checked;
-                    });
-                    return returnObj;
-                  });
-                }}
-                name='Select All'
-              />
-            }
-            label='Select All'
-          />
-          <Divider // Separates Select All Checkbox from other Checkboxes
-          />
-          {Object.keys(styleFilterObject).map((thisLabel) => (
-            <FormControlLabel
-              key={thisLabel}
-              disabled={styleFilterObject[thisLabel].disabled}
-              control={<Checkbox />}
-              label={`${thisLabel} (${
-                initialFilteredPostsObjects.filter((thisObj) => thisObj.tags.includes(thisLabel))
-                  .length
-              })`}
-              checked={styleFilterObject[thisLabel].checked}
-              onChange={(event: SyntheticEvent<Element, Event>, checked: boolean) => {
-                updateLog(`Clicked Checkbox for '${thisLabel}'`);
-                setStyleFilterObject((prev) => {
-                  const returnObj = { ...prev };
-                  returnObj[thisLabel].checked = checked;
-                  return returnObj;
-                });
-              }}
-            />
-          ))}
-        </FormGroup>
+          <FilterCheckboxes/>
       </Collapse>
-    </Box>
-  );
+      </Box>
+    );
 }
 
 export default Filter;

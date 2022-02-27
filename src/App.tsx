@@ -19,7 +19,7 @@ logAdminExternal({
 });
 if (typeof googleAnalyticsTrackingCode === 'string') {
   ReactGA.initialize(googleAnalyticsTrackingCode, {
-    debug: true,
+    // debug: true,
     titleCase: false,
   });
 } else throw new Error('THERE IS NO ENV VARIABLE FOR GOOGLE ANALYTICS');

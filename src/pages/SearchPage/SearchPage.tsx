@@ -7,6 +7,7 @@ import { GlobalContext } from '../../Context/GlobalContext';
 import SearchResults from '../../components/SearchResults';
 import Filter from '../../components/Filter';
 import SearchContextProvider from '../../Context/SearchContext';
+import { logAdminExternal } from '../../utils/logging';
 
 export default function SearchPage() {
   const { filterMobileOpen, setFilterMobileOpen } = React.useContext(GlobalContext);
@@ -40,7 +41,7 @@ export default function SearchPage() {
               '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
             }}
           >
-            <Filter />
+            {filterMobileOpen && <Filter origin="narrow"/>}
           </Drawer>
           {/* Drawer with filter if wide screen */}
           <Drawer
@@ -49,9 +50,9 @@ export default function SearchPage() {
               display: { xs: 'none', md: 'block' },
               '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
             }}
-            open
+            open={!filterMobileOpen}
           >
-            <Filter />
+            {!filterMobileOpen && <Filter origin="wide" />}
           </Drawer>
         </Box>
         <Box // The main section containing results

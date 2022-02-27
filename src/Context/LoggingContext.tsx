@@ -45,11 +45,11 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
     const deviceData = getDeviceData();
     const IpApiObject = await fetchIpApiObject();
     const geoLocationObject = await fetchGeolocationApi();
-    logAdminExternal({
-      IpApiObject,
-      geoLocationObject,
-      deviceData,
-    });
+    // logAdminExternal({
+    //   IpApiObject,
+    //   geoLocationObject,
+    //   deviceData,
+    // });
     // const postToBackEndForSessionId = await fetchPostBase(
     //   '/analytics/initial',
     //   JSON.stringify({ IpApiObject, geoLocationObject, deviceData })
@@ -61,12 +61,12 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
   }
 
   useInterval(() => {
-    logAdminExternal({
-      status: 'sending interval analytics',
-      sessionId: sessionState.sessionId,
-      secondsPassed: sessionState.secondsPassed + 15,
-      logOfUserActions,
-    });
+    // logAdminExternal({
+    //   status: 'sending interval analytics',
+    //   sessionId: sessionState.sessionId,
+    //   secondsPassed: sessionState.secondsPassed + 15,
+    //   logOfUserActions,
+    // });
     // Update SessionState
     setSessionState((prev) => ({ ...prev, secondsPassed: prev.secondsPassed + 15 }));
     // Send SessionData to Back End
@@ -81,7 +81,8 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
   }, 3000);
 
   useEffect(() => {
-    initialAnalyticsCall();
+    // TODO: Need to turn this on when going live
+    // initialAnalyticsCall();
   }, []);
 
   const value = React.useMemo(
@@ -90,7 +91,7 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
       setLogOfUserActions,
       updateLog,
     }),
-    [logOfUserActions]
+    []
   );
 
   return <LoggingContext.Provider value={value} {...props} />;
