@@ -38,18 +38,18 @@ function PostInitialAndInterval() {
   };
 
   const initialBodyObject = {
-    dummyIpApiObject,
-    dummyGeolocationObject,
-    dummyDeviceDataObject,
+    location: dummyIpApiObject,
+    geoLocation: dummyGeolocationObject,
+    device: dummyDeviceDataObject,
   };
   const intervalBodyObject = {
-    sessionId: 1,
-    secondsPassed: 15,
     logOfUserActions: [{
+      sessionId: "biglongstring",
+      secondsPassed: 15,
       localLogId: 1,
       localTimestamp: new Date().toISOString(),
       action: 'dummy action for test',
-    }],
+    }]
   };
 
   async function fetchPostButtonClicked(subdirectories: string, postObject: string): Promise<void> {
@@ -90,7 +90,7 @@ function PostInitialAndInterval() {
         <Button
           sx={{ minWidth: 200 }}
           onClick={() =>
-            fetchPostButtonClicked('/analytics/initial', JSON.stringify(initialBodyObject))
+            fetchPostButtonClicked('/api/analytics/initial', JSON.stringify(initialBodyObject))
           }
           variant='contained'
           color='secondary'
@@ -101,7 +101,7 @@ function PostInitialAndInterval() {
         <Button
           sx={{ minWidth: 200 }}
           onClick={() =>
-            fetchPostButtonClicked('/analytics/interval', JSON.stringify(intervalBodyObject))
+            fetchPostButtonClicked('/api/analytics/interval', JSON.stringify(intervalBodyObject))
           }
           variant='contained'
           color='secondary'
