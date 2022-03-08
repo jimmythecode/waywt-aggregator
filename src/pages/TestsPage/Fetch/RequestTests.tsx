@@ -44,7 +44,7 @@ function PostInitialAndInterval() {
   };
   const intervalBodyObject = {
     logOfUserActions: [{
-      sessionId: "biglongstring",
+      sessionId: "6227b5a1ab5659aaf1b554b9",
       secondsPassed: 15,
       localLogId: 1,
       localTimestamp: new Date().toISOString(),
