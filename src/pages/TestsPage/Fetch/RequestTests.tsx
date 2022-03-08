@@ -6,7 +6,7 @@ import { fetchGetBase, fetchPostBase } from './fetchRequests';
 import { logAdminExternal } from '../../../utils/logging';
 import { DeviceData, fetchIpApiObject, GeolocationResponse } from '../../../utils/analytics';
 
-const url = 'https://todoapi20220120072839.azurewebsites.net/api/todoitems';
+const url = 'https://todoapi20220120072839.azurewebsites.net/api';
 // const url = 'https://api.publicapis.org/entries';
 
 function PostInitialAndInterval() {
@@ -90,7 +90,7 @@ function PostInitialAndInterval() {
         <Button
           sx={{ minWidth: 200 }}
           onClick={() =>
-            fetchPostButtonClicked('/api/analytics/initial', JSON.stringify(initialBodyObject))
+            fetchPostButtonClicked('/analytics/initial', JSON.stringify(initialBodyObject))
           }
           variant='contained'
           color='secondary'
@@ -101,7 +101,7 @@ function PostInitialAndInterval() {
         <Button
           sx={{ minWidth: 200 }}
           onClick={() =>
-            fetchPostButtonClicked('/api/analytics/interval', JSON.stringify(intervalBodyObject))
+            fetchPostButtonClicked('/analytics/interval', JSON.stringify(intervalBodyObject))
           }
           variant='contained'
           color='secondary'
@@ -180,10 +180,10 @@ function RequestTests() {
       <button
         type='button'
         onClick={() =>
-          setGetStringState('https://todoapi20220120072839.azurewebsites.net/api/todoitems')
+          setGetStringState('https://todoapi20220120072839.azurewebsites.net/api')
         }
       >
-        https://todoapi20220120072839.azurewebsites.net/api/todoitems
+        https://todoapi20220120072839.azurewebsites.net/api
       </button>
       {/* GET Request */}
       <Box
