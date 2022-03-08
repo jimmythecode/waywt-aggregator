@@ -6,7 +6,7 @@ import { fetchGetBase, fetchPostBase } from './fetchRequests';
 import { logAdminExternal } from '../../../utils/logging';
 import { DeviceData, fetchIpApiObject, GeolocationResponse } from '../../../utils/analytics';
 
-const url = 'https://todoapi20220120072839.azurewebsites.net/api';
+const url = 'https://waywt-backend.azurewebsites.net/api';
 // const url = 'https://api.publicapis.org/entries';
 
 function PostInitialAndInterval() {
@@ -180,10 +180,10 @@ function RequestTests() {
       <button
         type='button'
         onClick={() =>
-          setGetStringState('https://todoapi20220120072839.azurewebsites.net/api')
+          setGetStringState('https://waywt-backend.azurewebsites.net/api/analytics')
         }
       >
-        https://todoapi20220120072839.azurewebsites.net/api
+        https://waywt-backend.azurewebsites.net/api/analytics
       </button>
       {/* GET Request */}
       <Box
