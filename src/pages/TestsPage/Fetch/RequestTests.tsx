@@ -13,7 +13,7 @@ function PostInitialAndInterval() {
   const { enqueueSnackbar } = useSnackbar();
   const [responseBody, setResponseBody] = React.useState({});
 
-  const dummyIpApiObject: DeviceData = {
+  const dummyDeviceObject: DeviceData = {
     browserName: 'browserName',
     deviceType: 'deviceType',
     getUA: 'getUA',
@@ -22,11 +22,11 @@ function PostInitialAndInterval() {
     osName: 'osName,u',
   };
 
-  const dummyGeolocationObject: fetchIpApiObject = {
+  const dummyGeolocationIpObject: fetchIpApiObject = {
     ip: 'dummy IP address string, eg 00.000.00.000',
   };
 
-  const dummyDeviceDataObject: GeolocationResponse = {
+  const dummyLocationDataObject: GeolocationResponse = {
     country_code: 'country code',
     country_name: 'country name',
     city: 'city',
@@ -38,9 +38,9 @@ function PostInitialAndInterval() {
   };
 
   const initialBodyObject = {
-    location: dummyIpApiObject,
-    geoLocation: dummyGeolocationObject,
-    device: dummyDeviceDataObject,
+    location: dummyLocationDataObject,
+    geoLocation: dummyGeolocationIpObject,
+    device: dummyDeviceObject,
   };
   const intervalBodyObject = {
     logOfUserActions: [{
