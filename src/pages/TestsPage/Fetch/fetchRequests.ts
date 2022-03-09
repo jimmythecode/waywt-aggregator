@@ -1,6 +1,6 @@
 import { logAdminExternal } from '../../../utils/logging';
 
-const domainUrl = '';
+const domainUrl = 'https://waywt-backend.azurewebsites.net/api';
 
 function getRequestHeaders() {
     const requestHeaders = new Headers();

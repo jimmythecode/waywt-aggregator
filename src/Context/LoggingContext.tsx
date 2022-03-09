@@ -1,5 +1,7 @@
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import useInterval from '../CustomHooks/UseInterval';
+import { fetchPostBase } from '../pages/TestsPage/Fetch/fetchRequests';
 import { fetchGeolocationApi, fetchIpApiObject, getDeviceData } from '../utils/analytics';
 import { logAdminExternal } from '../utils/logging';
 
@@ -25,6 +27,7 @@ export const LoggingContext = React.createContext<LoggingContextInterface>(
 );
 
 export default function LoggingContextProvider(props: { children: React.ReactNode }) {
+  const { enqueueSnackbar } = useSnackbar();
   const [logOfUserActions, setLogOfUserActions] = useState<LoggingObject[]>([]);
   const [sessionState, setSessionState] = useState<SessionState>({
     sessionId: 0,
@@ -42,47 +45,47 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
   }
 
   async function initialAnalyticsCall() {
-    const deviceData = getDeviceData();
-    const IpApiObject = await fetchIpApiObject();
-    const geoLocationObject = await fetchGeolocationApi();
-    // logAdminExternal({
-    //   IpApiObject,
-    //   geoLocationObject,
-    //   deviceData,
-    // });
-    // const postToBackEndForSessionId = await fetchPostBase(
-    //   '/analytics/initial',
-    //   JSON.stringify({ IpApiObject, geoLocationObject, deviceData })
-    // );
-    // const parsedResponse = await postToBackEndForSessionId.json();
-    // setSessionState((prev) => ({ ...prev, sessionId: parsedResponse.sessionId }));
-
-    
+    const deviceDataObject = getDeviceData();
+    const ipObject = await fetchIpApiObject();
+    const geolocationObject = await fetchGeolocationApi();
+    logAdminExternal({
+      ipObject,
+      geolocationObject,
+      deviceDataObject,
+    });
+    const postToBackEndForSessionId = await fetchPostBase(
+      '/analytics/initial',
+      JSON.stringify({ ipObject, geolocationObject, deviceDataObject })
+    );
+    const parsedResponse = await postToBackEndForSessionId.json();
+    if (typeof parsedResponse.Id !== 'string') {
+      enqueueSnackbar('Error getting sessionId from Initial Analytics call', { variant: 'error' });
+      return;
+    }
+    setSessionState((prev) => ({ ...prev, sessionId: parsedResponse.Id }));
   }
 
   useInterval(() => {
-    // logAdminExternal({
-    //   status: 'sending interval analytics',
-    //   sessionId: sessionState.sessionId,
-    //   secondsPassed: sessionState.secondsPassed + 15,
-    //   logOfUserActions,
-    // });
+    logAdminExternal({
+      status: 'sending interval analytics',
+      sessionId: sessionState.sessionId,
+      secondsPassed: sessionState.secondsPassed + 15,
+      logOfUserActions,
+    });
     // Update SessionState
     setSessionState((prev) => ({ ...prev, secondsPassed: prev.secondsPassed + 15 }));
     // Send SessionData to Back End
-    // fetchPostBase(
-    //   '/analytics/interval',
-    //   JSON.stringify({
-    //     sessionId: sessionState.sessionId,
-    //     secondsPassed: sessionState.secondsPassed + 15,
-    //     logOfUserActions,
-    //   })
-    // );
+    const arrayToSend = logOfUserActions.map((thisObj) => ({
+      ...thisObj,
+      sessionId: sessionState.sessionId,
+      secondsPassed: sessionState.secondsPassed + 15,
+    }));
+    fetchPostBase('/analytics/interval', JSON.stringify(arrayToSend));
   }, 3000);
 
   useEffect(() => {
     // TODO: Need to turn this on when going live
-    // initialAnalyticsCall();
+    initialAnalyticsCall();
   }, []);
 
   const value = React.useMemo(

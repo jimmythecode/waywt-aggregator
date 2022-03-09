@@ -22,11 +22,11 @@ function PostInitialAndInterval() {
     osName: 'osName,u',
   };
 
-  const dummyGeolocationIpObject: fetchIpApiObject = {
+  const  dummyIpDataObject: fetchIpApiObject = {
     ip: 'dummy IP address string, eg 00.000.00.000',
   };
 
-  const dummyLocationDataObject: GeolocationResponse = {
+  const dummyGeolocationIpObject: GeolocationResponse = {
     country_code: 'country code',
     country_name: 'country name',
     city: 'city',
@@ -38,9 +38,9 @@ function PostInitialAndInterval() {
   };
 
   const initialBodyObject = {
-    location: dummyLocationDataObject,
-    geoLocation: dummyGeolocationIpObject,
-    device: dummyDeviceObject,
+    ipObject: dummyIpDataObject,
+    geolocationObject: dummyGeolocationIpObject,
+    deviceDataObject: dummyDeviceObject,
   };
   const intervalBodyObject = {
     logOfUserActions: [{
@@ -97,7 +97,6 @@ function PostInitialAndInterval() {
         >
           POST INITIAL
         </Button>
-
         <Button
           sx={{ minWidth: 200 }}
           onClick={() =>
@@ -195,7 +194,7 @@ function RequestTests() {
           alignItems: 'center',
         }}
       >
-        <Box
+        <Box // GET URL input and response output box
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -204,7 +203,7 @@ function RequestTests() {
             height: 100,
           }}
         >
-          <TextField
+          <TextField // text input for GET URL
             // sx={{ width: 180 }}
             id='get-input'
             label='Paste URL for GET request'
@@ -221,7 +220,7 @@ function RequestTests() {
             Send Get Request
           </Button>
         </Box>
-        <Box
+        <Box // JSON.stringify response for GET request
           sx={{
             border: 'solid 1px silver',
             borderRadius: '10px',
@@ -246,7 +245,7 @@ function RequestTests() {
           alignItems: 'center',
         }}
       >
-        <Box
+        <Box // Input TextField for POST Request
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -275,7 +274,7 @@ function RequestTests() {
             Send POST Request
           </Button>
         </Box>
-        <Box
+        <Box // JSON.stringify response for POST request
           sx={{
             border: 'solid 1px silver',
             borderRadius: '10px',
