@@ -113,7 +113,7 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
       latestLocalLogIdTracker += 1;
     }
     // Update SessionState
-    await fetchPostBase('/analytics/interval', JSON.stringify(arrayToSend));
+    await fetchPostBase('/analytics/interval', JSON.stringify({logOfUserActions: arrayToSend}));
 
     setSessionState((prev) => ({
       ...prev,
