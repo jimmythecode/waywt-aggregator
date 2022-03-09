@@ -26,7 +26,7 @@ function Filter({origin}: {origin:string}) {
     initialFilteredPostsObjects,
   } = useContext(SearchContext);
   const { filterMobileOpen } = React.useContext(GlobalContext);
-  const { updateLog } = useContext(LoggingContext);
+  const { addLog } = useContext(LoggingContext);
   const [dropDownOpen, setDropDownOpen] = useState(true);
 
   // I want filterMobileOpen in state so that filter still renders when I slide window width back and forth

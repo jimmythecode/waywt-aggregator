@@ -1,10 +1,19 @@
-import React from 'react'
-import ReactMarkdown from 'react-markdown'
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
-function Markdown({markdown}:{markdown: string}) {
+function Markdown({ markdown }: { markdown: string }) {
+  const arrayOfParagraphs = markdown.split('\n')
+    .map(x=> x.trim())
+    .filter(x=>x.length>0);
+  
   return (
-    <ReactMarkdown>{markdown}</ReactMarkdown>
-  )
+    // <ReactMarkdown>{markdown}</ReactMarkdown>
+    <div>
+      {arrayOfParagraphs.map((thisParagraph) => (
+        <ReactMarkdown>{thisParagraph}</ReactMarkdown>
+      ))}
+    </div>
+  );
 }
 
-export default Markdown
+export default Markdown;

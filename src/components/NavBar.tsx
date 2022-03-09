@@ -15,7 +15,7 @@ import { LoggingContext } from '../Context/LoggingContext';
 
 function MiddleButtons() {
   const { filterMobileOpen, setFilterMobileOpen } = React.useContext(GlobalContext);
-  const { updateLog } = useContext(LoggingContext);
+  const { addLog } = useContext(LoggingContext);
   const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1, display: 'flex' }}>
@@ -30,7 +30,7 @@ function MiddleButtons() {
         }}
         onClick={() => {
           navigate(`/`);
-          updateLog('Clicked NavBar Logo');
+          addLog('Clicked NavBar Logo');
         }}
       >
         WAYWT Aggregator
@@ -51,7 +51,7 @@ function MiddleButtons() {
         color='secondary'
         variant='contained'
         onClick={() => {
-          updateLog('Clicked NavBar Open Filter Button');
+          addLog('Clicked NavBar Open Filter Button');
           setFilterMobileOpen((prev) => !prev);
         }}
       >
@@ -62,7 +62,7 @@ function MiddleButtons() {
 }
 
 export default function NavBar() {
-  const { updateLog } = useContext(LoggingContext);
+  const { addLog } = useContext(LoggingContext);
   const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<Element | null>(null);
 
@@ -71,7 +71,7 @@ export default function NavBar() {
 
   const handleProfileMenuOpen = (event: { currentTarget: Element }) => {
     setAnchorEl(event.currentTarget);
-    updateLog('Clicked NavBar AccountCircle Menu Button')
+    addLog('Clicked NavBar AccountCircle Menu Button')
   };
 
   const handleMobileMenuClose = () => {
@@ -154,7 +154,7 @@ export default function NavBar() {
             color='inherit'
             aria-label='open drawer'
             sx={{ mr: 2 }}
-            onClick={() => updateLog('Clicked NavBar Menu Button')}
+            onClick={() => addLog('Clicked NavBar Menu Button')}
           >
             <MenuIcon />
           </IconButton>

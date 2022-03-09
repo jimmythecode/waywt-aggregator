@@ -25,7 +25,7 @@ import { UserContext } from '../Context/UserContext';
 import { LoggingContext } from '../Context/LoggingContext';
 
 function VoteSidePanel() {
-  const { updateLog } = useContext(LoggingContext);
+  const { addLog } = useContext(LoggingContext);
   const [thumbUpState, setThumbUpState] = React.useState(false);
   const [thumbDownState, setThumbDownState] = React.useState(false);
   return (
@@ -44,7 +44,7 @@ function VoteSidePanel() {
           onClick={() => {
             setThumbUpState((prev) => !prev);
             setThumbDownState(false);
-            updateLog('clicked thumb up');
+            addLog('clicked thumb up');
           }}
         >
           <ThumbUpOffAltIcon color={thumbUpState ? 'success' : 'disabled'} />
@@ -54,7 +54,7 @@ function VoteSidePanel() {
           onClick={() => {
             setThumbDownState((prev) => !prev);
             setThumbUpState(false);
-            updateLog('clicked thumb down');
+            addLog('clicked thumb down');
           }}
         >
           <ThumbDownOffAltIcon color={thumbDownState ? 'error' : 'disabled'} />
@@ -66,7 +66,7 @@ function VoteSidePanel() {
 
 // eg: "posted by /u/jimmythecode 2 days ago"
 function HeaderInfo({ postObject }: { postObject: PostObject }) {
-  const { updateLog } = useContext(LoggingContext);
+  const { addLog } = useContext(LoggingContext);
   const countryCode =
     typeof postObject?.country === 'string' && postObject.country.length > 0
       ? postObject.country.toLowerCase()
@@ -86,7 +86,7 @@ function HeaderInfo({ postObject }: { postObject: PostObject }) {
       <span>
         Posted by{' '}
         <a
-          onPointerDown={() => updateLog('onPointerDown u/username link')}
+          onPointerDown={() => addLog('onPointerDown u/username link')}
           target='_blank'
           rel='noreferrer'
           href={`https://www.reddit.com/user/${postObject.username}`}
@@ -113,7 +113,7 @@ function HeaderInfo({ postObject }: { postObject: PostObject }) {
 }
 
 function PostInfo({ postObject }: { postObject: PostObject }) {
-  const { updateLog } = useContext(LoggingContext);
+  const { addLog } = useContext(LoggingContext);
   const [postTextHiddenState, setPostTextHiddenState] = React.useState(false);
   return (
     <>
@@ -165,7 +165,7 @@ function PostInfo({ postObject }: { postObject: PostObject }) {
             }}
             onClick={() => {
               setPostTextHiddenState(true);
-              updateLog('clicked expand markdown post line');
+              addLog('clicked expand markdown post line');
             }}
           >
             <div />
@@ -192,7 +192,7 @@ function PostInfo({ postObject }: { postObject: PostObject }) {
 }
 
 function StyleChips({ postObject }: { postObject: PostObject }) {
-  const { updateLog } = useContext(LoggingContext);
+  const { addLog } = useContext(LoggingContext);
   const arrayOfChips = postObject.tags || [];
   return (
     <Box
@@ -237,7 +237,7 @@ function StyleChips({ postObject }: { postObject: PostObject }) {
             sx={{
               cursor: 'pointer',
             }}
-            onClick={() => updateLog('clicked a chip')}
+            onClick={() => addLog('clicked a chip')}
           />
         ))}
         {arrayOfChips.length === 0 && (
@@ -376,7 +376,7 @@ function DifferenceWithArrowOrScales({
 function UserInfo({ postObject }: { postObject: PostObject }) {
   // Panel with Height, Chest, Waist measures and Season
   const { userDetails } = React.useContext(UserContext);
-  const { updateLog } = useContext(LoggingContext);
+  const { addLog } = useContext(LoggingContext);
   return (
     <Box
       sx={{
@@ -390,7 +390,7 @@ function UserInfo({ postObject }: { postObject: PostObject }) {
         borderColor: grey[400],
         position: 'relative',
       }}
-      onClick={() => updateLog('clicked userInfo panel')}
+      onClick={() => addLog('clicked userInfo panel')}
     >
       <span
         style={{
@@ -456,7 +456,7 @@ function UserInfo({ postObject }: { postObject: PostObject }) {
             />
           </Box>
           <Box // Season Icon
-            onMouseEnter={() => updateLog('onMouseEnter over SeasonIcon')}
+            onMouseEnter={() => addLog('onMouseEnter over SeasonIcon')}
           >
             <SeasonIcon season={postObject.season} />
           </Box>

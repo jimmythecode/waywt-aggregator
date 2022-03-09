@@ -10,7 +10,7 @@ function FilterCheckbox({ thisLabel }: { thisLabel: string }) {
     initialFilteredPostsObjects,
     updateFilterUpdateTimestamps,
   } = useContext(SearchContext);
-  const { updateLog } = useContext(LoggingContext);
+  const { addLog } = useContext(LoggingContext);
   const [localCheckedState, setLocalCheckedState] = React.useState(
     styleFilterObject[thisLabel].checked
   );
@@ -61,7 +61,7 @@ function FilterCheckbox({ thisLabel }: { thisLabel: string }) {
       label={`${thisLabel} (${numberOfTagInstances})`}
       checked={styleFilterObject[thisLabel].checked}
       onChange={(event: React.SyntheticEvent<Element, Event>, checked: boolean) => {
-        updateLog(`Clicked Checkbox for '${thisLabel}'`);
+        addLog(`Clicked Checkbox for '${thisLabel}'`);
         updateFilterUpdateTimestamps('styleTags');
         setStyleFilterObject((prev) => {
           const returnObj = { ...prev };

@@ -33,7 +33,7 @@ export const SearchContext = React.createContext<SearchContextInterface>(
 
 export default function SearchContextProvider(props: { children: React.ReactNode }) {
   // USECONTEXT
-  const { updateLog } = useContext(LoggingContext);
+  const { addLog } = useContext(LoggingContext);
   // USESTATE
   const initialFilteredPostsObjects = postsObjects;
   const [filteredPostsInternal, setFilteredPostsInternal] = useState(initialFilteredPostsObjects);
@@ -77,7 +77,7 @@ export default function SearchContextProvider(props: { children: React.ReactNode
   const [styleFilterObject, setStyleFilterObject] = useState(initialStyleFilterObject);
 
   function updateResults(): void {
-    updateLog('Clicked Update Results Button');
+    addLog('Clicked Update Results Button');
     updateFilterUpdateTimestamps('updateResults');
     setFilteredPosts(filteredPostsInternal);
   }

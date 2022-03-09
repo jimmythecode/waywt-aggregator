@@ -13,7 +13,7 @@ function FilterCheckboxes() {
     // initialFilteredPostsObjects,
     updateFilterUpdateTimestamps,
   } = useContext(SearchContext);
-  const { updateLog } = useContext(LoggingContext);
+  const { addLog } = useContext(LoggingContext);
 
   function numberOfResultsWithThisTag(thisLabel: string): number {
     // return initialFilteredPostsObjects.filter((thisObj) => thisObj.tags.includes(thisLabel)).length;
@@ -27,7 +27,7 @@ function FilterCheckboxes() {
           <Checkbox
             checked={!Object.values(styleFilterObject).some((x) => x.checked === false)}
             onChange={(event: SyntheticEvent<Element, Event>, checked: boolean) => {
-              updateLog(`Clicked Checkbox for '${'Select All'}'`);
+              addLog(`Clicked Checkbox for '${'Select All'}'`);
               updateFilterUpdateTimestamps('styleTags')
               setStyleFilterObject((prev) => {
                 const returnObj = { ...prev };
