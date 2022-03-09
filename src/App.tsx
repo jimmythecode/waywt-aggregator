@@ -29,8 +29,6 @@ function App() {
 
   // Google Analytics to send data on each page change
   useEffect(() => {
-    // console.log('page changed!', window.location.pathname + window.location.search);
-    // console.log(location);
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, [location.pathname]);
 
@@ -43,7 +41,6 @@ function App() {
             <Routes>
               <Route path='/' element={<SearchPage />} />
               <Route path='/tests' element={<TestsPage />} />
-              {/* <Route path='/drawer' element={<Drawer />} /> */}
               <Route path='/settings' element={<SettingsPage />} />
             </Routes>
           </UserContext>
