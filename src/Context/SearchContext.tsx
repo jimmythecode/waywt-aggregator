@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { PostObject, postsObjects } from '../utils/dataObjects';
-import { logAdminExternal } from '../utils/logging';
 import { LoggingContext } from './LoggingContext';
 
 export type FilterObject = Record<string, { checked: boolean; disabled: boolean }>;
