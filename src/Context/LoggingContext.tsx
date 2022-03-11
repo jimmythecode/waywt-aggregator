@@ -85,6 +85,8 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
 
   // Send actionLogs every 15 seconds
   useInterval(async () => {
+    if (process.env.NODE_ENV === 'development') return;
+
     logAdminExternal({
       status: 'sending interval analytics',
       sessionId: sessionState.sessionId,
@@ -113,7 +115,7 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
       latestLocalLogIdTracker += 1;
     }
     // Update SessionState
-    await fetchPostBase('/analytics/interval', JSON.stringify({logOfUserActions: arrayToSend}));
+    await fetchPostBase('/analytics/interval', JSON.stringify({ logOfUserActions: arrayToSend }));
 
     setSessionState((prev) => ({
       ...prev,
@@ -125,6 +127,7 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
 
   useEffect(() => {
     // TODO: Need to turn this on when going live
+    if (process.env.NODE_ENV === 'development') return;
     initialAnalyticsCall();
   }, []);
 

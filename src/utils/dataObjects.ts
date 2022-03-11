@@ -12,11 +12,12 @@ export interface PostObject {
     postUrl: string,
     tags: string[],
     country: string,
-    postText: string
+    postText: string,
+    round?: number,
 
 }
 
-export const postsObjects: PostObject[] = [
+export const postsObjects1: PostObject[] = [
     {
         postId: 1,
         username: "meatwater",
@@ -351,7 +352,7 @@ export const postsObjects: PostObject[] = [
         season: "autumn",
         images: ["https://i.imgur.com/PwobPfO.jpeg"],
         postUrl: "",
-        tags: ["casual"],
+        tags: ["casual", "workwear", "avant-garde", "military"],
         country: "US",
         postText: `post text not provided`
 
@@ -386,7 +387,202 @@ export const postsObjects: PostObject[] = [
     },
 ] 
 
-// avant-garde/casual/slim/industrial/etc
-// Hi there, I was just looking through a WAYWT thread on r/mfa, and came across your post. I wanted to put it on a WAYWT aggregator website I'm building as a practice coding project. Just wanted to ask:
-// 1. If you didn't mind me using your post for the aggregator?
-// 2. I want to add style/fit description tags (but I'm clueless). What tags would you suggest giving your post (eg, avant-garde/casual/slim/industrial/etc)
+
+export const postsObjects2: PostObject[] = [
+  
+    {
+        postId: 22,
+        username: "homeostatic_range",
+        height: 180,
+        chest: 100,
+        waist: 80,
+        season: "autumn",
+        images: ["https://imgur.com/a/wxVbRJO"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/comment/hxv163t/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["workwear", "vintage"],
+        country: "US",
+        postText: `snow storm. had to change clothes before heading over to a friend (shitty quality photos as usual)
+        Jacket: vintage, fjällräven
+        
+        Cardigan/blazer: vintage
+        
+        Sweater: lambswool sweater, h&m
+        
+        Shirt: vintage flannel shirt
+        
+        Trousers: relaxed fit cords, new black
+        
+        Boots: wolverines, been using them for over a decade now`,
+        round:2
+    },
+    {
+        postId: 23,
+        username: "partycharlie",
+        height: 180,
+        chest: 100,
+        waist: 80,
+        season: "autumn",
+        images: ["https://i.imgur.com/ioNQ0R0.jpg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxuq6nb/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["shashiko", "patchwork", "DIY", "western"],
+        country: "US",
+        postText: `
+        crooked stitches, patched britches`,
+        round:2
+    },
+    {
+        postId: 24,
+        username: "kap_kap_kapitol",
+        height: 180,
+        chest: 100,
+        waist: 80,
+        season: "autumn",
+        images: ["https://i.imgur.com/XDEBJEl.jpg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxvpnmi/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["casual", "streetwear",],
+        country: "US",
+        postText: `Quick dinner out with Family
+        First time posting. I know the pic quality is trash. Starting to revamp my style at 37.
+        
+        Old Navy jacket / Uniqlo Full Zip Hoodie / Urban Outfitters L/S Tee (WuTang) / Staple pants / Vans`,
+        round:2
+    },
+    {
+        postId: 25,
+        username: "PencilNeckSissy",
+        height: 180,
+        chest: 100,
+        waist: 80,
+        season: "autumn",
+        images: ["https://i.imgur.com/K3QmdVk.jpg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/comment/i00gchg/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["denim", "military","grunge"],
+        country: "US",
+        postText: `enjoying my new kimono!
+        Greg Lauren army scrapwork kimono
+        Uniqlo t
+        Levi's Made & Crafted shuttle jeans
+        Officine Creative backzip boots`,
+        round:2
+    },
+    {
+        postId: 26,
+        username: "BenReese",
+        height: 180,
+        chest: 100,
+        waist: 80,
+        season: "autumn",
+        images: ["https://i.imgur.com/zGEbCWQ.jpg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/waywt_9_march_2022/i014g84/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["streetwear", "americana","japanese americana", "casual", "bag", "sacoche", "customized", "pinned"],
+        country: "US",
+        postText: `shot an awkward angle then too far away. These pants + jacket is still one or my favorite combos. I always wear the orange watch strap, but I like add another touch of orange when i can
+
+        OrSlow
+        
+        ABC123
+        
+        Kapital
+        
+        Visvim`,
+        round:2
+    },
+    {
+        postId: 27,
+        username: "twoheartedthrowaway",
+        height: 180,
+        chest: 100,
+        waist: 80,
+        season: "autumn",
+        images: ["https://i.imgur.com/e7y4lnM.jpg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/waywt_9_march_2022/i00y3v0/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["slow fashion","casual", "denim"],
+        country: "US",
+        postText: `big shirt mode
+        18 East shirt / 3sixteen black jeans / blundstones/ray ban meteor`,
+        round:2
+    },
+    {
+        postId: 28,
+        username: "pokemonconspiracies",
+        height: 180,
+        chest: 100,
+        waist: 80,
+        season: "autumn",
+        images: ["https://i.imgur.com/qyQAQbC.jpg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/comment/hzzrp2u/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["workwear","casual", "skater", "relaxed"],
+        country: "US",
+        postText: `new double knees
+        carhartt / magenta sb / carhartt / nb`,
+        round:2
+    },
+    {
+        postId: 29,
+        username: "pokemonconspiracies",
+        height: 180,
+        chest: 100,
+        waist: 80,
+        season: "autumn",
+        images: ["https://imgur.com/a/LiSnYZO#ANZrtpj"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/waywt_9_march_2022/hzzriik/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["kilt","rugby", "avant-garde"],
+        country: "US",
+        postText: `Photo dump from the weekend.
+        Fit 1) Saturday morning tea.
+        
+        MLS Camp bucket hat/ thrifted tee/thrifted Gap joggers/ Sambas
+        
+        Fit 2) Rugby Banquet (we’re the QC Irish)
+        
+        Express jacket/Ireland rugby/kilt/forget the brand of boots
+        
+        Fit 3) Errand runner
+        
+        Milsurp jacket/ Chaps/ Polo RL/ Deerstags`,
+        round:2
+    },
+    {
+        postId: 30,
+        username: "Shrimp_my_Ride",
+        height: 180,
+        chest: 100,
+        waist: 80,
+        season: "autumn",
+        images: ["https://i.imgur.com/JgyrZkh"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxv6mkv/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["casual-ivy"],
+        country: "US",
+        postText: `Arguably Seinfeld-adjacent
+        Beams
+        Levis
+        New Balance`,
+        round: 2
+    },
+    
+    {
+        postId: 31,
+        username: "teawhyellieare",
+        height: 180,
+        chest: 100,
+        waist: 80,
+        season: "autumn",
+        images: ["https://imgur.com/a/n3ulesC"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxv61gd/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["casual"],
+        country: "US",
+        postText: `spring has sprung
+        kith quilted overshirt
+        
+        gap striped shirt
+        
+        sabah belt
+        
+        rhythm pants
+        
+        sabah shoes`,
+        round:2
+    },
+    ]
+
+export const postsObjects : PostObject[] = postsObjects1.concat(postsObjects2);

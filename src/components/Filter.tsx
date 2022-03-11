@@ -16,7 +16,7 @@ import FilterCheckboxes from './FilterCheckboxes';
 import { logAdminExternal } from '../utils/logging';
 import { GlobalContext } from '../Context/GlobalContext';
 
-function Filter({origin}: {origin:string}) {
+function Filter({ origin }: { origin: string }) {
   const {
     updateResults,
     styleFilterObject,
@@ -30,8 +30,10 @@ function Filter({origin}: {origin:string}) {
   const [dropDownOpen, setDropDownOpen] = useState(true);
 
   // I want filterMobileOpen in state so that filter still renders when I slide window width back and forth
-  const doNothing = ()=> "nothing"
-  if (filterMobileOpen){doNothing()}
+  const doNothing = () => 'nothing';
+  if (filterMobileOpen) {
+    doNothing();
+  }
 
   return (
     <Box>
@@ -58,11 +60,18 @@ function Filter({origin}: {origin:string}) {
       >
         Styles
       </Button>
-      <Collapse in={dropDownOpen}>
-          <FilterCheckboxes/>
+      <Collapse // Style Checkboxes
+        in={dropDownOpen}
+      >
+        <FilterCheckboxes filterObject={styleFilterObject} setFilterObject={setStyleFilterObject} />
       </Collapse>
-      </Box>
-    );
+      <Collapse // User Checkboxes
+        in={dropDownOpen}
+      >
+        <FilterCheckboxes filterObject={styleFilterObject} setFilterObject={setStyleFilterObject} />
+      </Collapse>
+    </Box>
+  );
 }
 
 export default Filter;

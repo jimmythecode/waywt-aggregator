@@ -10,7 +10,7 @@ function Markdown({ markdown }: { markdown: string }) {
     // <ReactMarkdown>{markdown}</ReactMarkdown>
     <div>
       {arrayOfParagraphs.map((thisParagraph) => (
-        <ReactMarkdown>{thisParagraph}</ReactMarkdown>
+        <ReactMarkdown key={thisParagraph}>{thisParagraph}</ReactMarkdown>
       ))}
     </div>
   );
