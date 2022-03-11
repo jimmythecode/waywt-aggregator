@@ -9,8 +9,8 @@ function Markdown({ markdown }: { markdown: string }) {
   return (
     // <ReactMarkdown>{markdown}</ReactMarkdown>
     <div>
-      {arrayOfParagraphs.map((thisParagraph) => (
-        <ReactMarkdown key={thisParagraph}>{thisParagraph}</ReactMarkdown>
+      {arrayOfParagraphs.map((thisParagraph, index) => (
+        <ReactMarkdown key={index.toString()}>{thisParagraph}</ReactMarkdown>
       ))}
     </div>
   );
