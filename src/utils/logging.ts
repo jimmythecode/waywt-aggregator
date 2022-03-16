@@ -3,7 +3,7 @@
 export type LogAdmin = (...args: unknown[]) => void;
 
 const css = `color: blue`;
-const inDevelopment = process.env.NODE_ENV === 'development'
+const inDevelopment = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === "test"
 
 export function logAdminExternal(...args: unknown[]): void {
 	if (!inDevelopment && (args as unknown as {viaContext: boolean}).viaContext !== true) return;

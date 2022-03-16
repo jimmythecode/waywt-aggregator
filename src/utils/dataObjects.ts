@@ -14,17 +14,16 @@ export interface PostObject {
     country: string,
     postText: string,
     round?: number,
-
 }
 
 export const postsObjects1: PostObject[] = [
     {
         postId: 1,
         username: "meatwater",
-        height: 180,
-        chest: 100,
+        height: 160,
+        chest: 90,
         waist: 80,
-        season: "autumn",
+        season: "winter",
         images: ["https://i.imgur.com/66JrARz.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/ssfeyk/comment/hwxsybi/?utm_source=share&utm_medium=web2x&context=3",
         tags: ["snow day"],
@@ -36,98 +35,12 @@ export const postsObjects1: PostObject[] = [
         Joseph / Tibi / Vince`
     },
     {
-        postId: 6,
-        username: "HalfTheGoldTreasure",
-        height: 186,
-        chest: 110,
-        waist: 90,
-        season: "autumn",
-        images: ["https://i.imgur.com/icXQl3g.jpg"],
-        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/comment/hxuoyxz/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ['casual', 'workwear', 'streetwear', 'neo-prep', 'vintage', 'rugged Ivy', 'relaxed fit'],
-        country: "US",
-        postText: `EG/Wythe/Vintage Levi’s/Aldens
-        Knickerbocker/Vintage/LWC/Vintage Levi’s/NB993`
-    },
-    {
-        postId: 7,
-        username: "narwhalspal",
-        height: 186,
-        chest: 110,
-        waist: 90,
-        season: "autumn",
-        images: ["https://imgur.com/LIlYHwn"],
-        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxv0uyn/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["casual", "workwear", "streetwear", "neo-prep", "vintage", "rugged Ivy", "relaxed fit"],
-        country: "US",
-        postText: `Casual Monday from Saturday I think
-        stan ray/patagonia/levis/russell`
-    },
-    {
-        postId: 8,
-        username: "goonerdavid",
-        height: 186,
-        chest: 110,
-        waist: 90,
-        season: "autumn",
-        images: ["https://i.imgur.com/FQiJIPx.jpeg"],
-        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/comment/hxvgv4e/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["casual", "sports", "football/soccer"],
-        country: "US",
-        postText: `any gooners in here?
-        vintage nike arsenal / uniqlo / veja
-        
-        ig: fratellifits`
-    },
-    {
-        postId: 9,
-        username: "pbarra96",
-        height: 186,
-        chest: 110,
-        waist: 90,
-        season: "autumn",
-        images: ["https://i.imgur.com/jcncMaK.jpg"],
-        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxutb4w/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["casual", "workwear", "japanese americana"],
-        country: "US",
-        postText: `ripple sole soul
-        Kapital / Uniqlo / RRL / Unmarked`
-    },
-    {
-        postId: 10,
-        username: "Walter_Crunkite_",
-        height: 186,
-        chest: 110,
-        waist: 90,
-        season: "autumn",
-        images: ["https://i.imgur.com/g2ExOUO.jpeg"],
-        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxuqwwh/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["casual", "americana", "loose fit", "cosy"],
-        country: "US",
-        postText: `https://imgur.com/a/DibFTXZ
-        Stan Ray/Dickies/Converse`
-    },
-    {
-        postId: 11,
-        username: "manliftingbanner",
-        height: 186,
-        chest: 110,
-        waist: 90,
-        season: "autumn",
-        images: ["https://i.imgur.com/ubzAphN.jpg"],
-        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxuto6p/?utm_source=share&utm_medium=web2x&context=3",
-        tags: [],
-        country: "US",
-        postText: `borrowed my dad's jeans to see if he would notice
-        Drake's / Engineered Garments / Universal Works / don't remember / Red Wing`
-    },
-    {
-        postId: 12,
+        postId: 2,
         username: "wavynails",
         height: 186,
         chest: 110,
         waist: 90,
-        season: "autumn",
+        season: "summer",
         images: ["https://i.imgur.com/FX3l7yS.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxuvmod/?utm_source=share&utm_medium=web2x&context=3",
         tags: ["casual", "wide"],
@@ -140,10 +53,10 @@ export const postsObjects1: PostObject[] = [
         Nothing ground breaking here, just grateful my pants and shoes are big enough that I can still wear them.`
     },
     {
-        postId: 13,
+        postId: 3,
         username: "KevinsChilli",
-        height: 186,
-        chest: 110,
+        height: 170,
+        chest: 105,
         waist: 90,
         season: "autumn",
         images: ["https://i.imgur.com/NhhNjvM.jpg"],
@@ -154,12 +67,12 @@ export const postsObjects1: PostObject[] = [
         Pendleton (thrifted), J. Crew (left at my house by anonymous), LL Bean (thrifted), Chaco`
     },
     {
-        postId: 14,
+        postId: 4,
         username: "lb17spradling",
-        height: 186,
-        chest: 110,
+        height: 176,
+        chest: 96,
         waist: 90,
-        season: "autumn",
+        season: "summer",
         images: ["https://i.imgur.com/rWLGEk7.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxuq91t/?utm_source=share&utm_medium=web2x&context=3",
         tags: ["vintage americana", "modern street", "traditional preppy"],
@@ -179,11 +92,11 @@ export const postsObjects1: PostObject[] = [
         boots: Dr. Martens 1460`
     },
     {
-        postId: 15,
-        username: "bchanx",
-        height: 186,
-        chest: 110,
-        waist: 90,
+        postId: 5,
+        username: "winter",
+        height: 178,
+        chest: 95,
+        waist: 80,
         season: "autumn",
         images: ["https://i.imgur.com/V4u35hT.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxv5d0e/?utm_source=share&utm_medium=web2x&context=3",
@@ -201,6 +114,148 @@ export const postsObjects1: PostObject[] = [
         bonus: in the wild
         insta`
     },
+    {
+        postId: 6,
+        username: "HalfTheGoldTreasure",
+        height: 186,
+        chest: 110,
+        waist: 96,
+        season: "summer",
+        images: ["https://i.imgur.com/icXQl3g.jpg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/comment/hxuoyxz/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ['casual', 'workwear', 'streetwear', 'neo-prep', 'vintage', 'rugged Ivy', 'relaxed fit'],
+        country: "US",
+        postText: `EG/Wythe/Vintage Levi’s/Aldens
+        Knickerbocker/Vintage/LWC/Vintage Levi’s/NB993`
+    },
+    {
+        postId: 7,
+        username: "narwhalspal",
+        height: 189,
+        chest: 110,
+        waist: 94,
+        season: "spring",
+        images: ["https://imgur.com/LIlYHwn"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxv0uyn/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["casual", "workwear", "streetwear", "neo-prep", "vintage", "rugged Ivy", "relaxed fit"],
+        country: "US",
+        postText: `Casual Monday from Saturday I think
+        stan ray/patagonia/levis/russell`
+    },
+    {
+        postId: 8,
+        username: "goonerdavid",
+        height: 183,
+        chest: 103,
+        waist: 80,
+        season: "winter",
+        images: ["https://i.imgur.com/FQiJIPx.jpeg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/comment/hxvgv4e/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["casual", "sports", "football/soccer"],
+        country: "US",
+        postText: `any gooners in here?
+        vintage nike arsenal / uniqlo / veja
+        
+        ig: fratellifits`
+    },
+    {
+        postId: 9,
+        username: "pbarra96",
+        height: 192,
+        chest: 108,
+        waist: 94,
+        season: "autumn",
+        images: ["https://i.imgur.com/jcncMaK.jpg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxutb4w/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["casual", "workwear", "japanese americana"],
+        country: "US",
+        postText: `ripple sole soul
+        Kapital / Uniqlo / RRL / Unmarked`
+    },
+    {
+        postId: 10,
+        username: "Walter_Crunkite_",
+        height: 180,
+        chest: 103,
+        waist: 88,
+        season: "winter",
+        images: ["https://i.imgur.com/g2ExOUO.jpeg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxuqwwh/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["casual", "americana", "loose fit", "cosy"],
+        country: "US",
+        postText: `https://imgur.com/a/DibFTXZ
+        Stan Ray/Dickies/Converse`
+    },
+    {
+        postId: 11,
+        username: "manliftingbanner",
+        height: 180,
+        chest: 105,
+        waist: 75,
+        season: "autumn",
+        images: ["https://i.imgur.com/ubzAphN.jpg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxuto6p/?utm_source=share&utm_medium=web2x&context=3",
+        tags: [],
+        country: "US",
+        postText: `borrowed my dad's jeans to see if he would notice
+        Drake's / Engineered Garments / Universal Works / don't remember / Red Wing`
+    },
+    {
+        postId: 12,
+        username: "sexymartian",
+        height: 189,
+        chest: 95,
+        waist: 75,
+        season: "autumn",
+        images: ["https://i.imgur.com/wwVmljw.jpg"],
+        postUrl: "",
+        tags: ["linen", "button down", "chic", "light"],
+        country: "US",
+        postText: `post text not provided`
+    },
+    {
+        postId: 13,
+        username: "OldGuyWhoSitsInFront",
+        height: 177,
+        chest: 110,
+        waist: 82,
+        season: "summer",
+        images: ["https://i.imgur.com/ihCmAto.jpeg"],
+        postUrl: "",
+        tags: [],
+        country: "US",
+        postText: `post text not provided`
+
+    },
+    {
+        postId: 14,
+        username: "Purple_Skies",
+        height: 177,
+        chest: 100,
+        waist: 82,
+        season: "autumn",
+        images: ["https://i.imgur.com/PwobPfO.jpeg"],
+        postUrl: "",
+        tags: ["casual", "workwear", "avant-garde", "military"],
+        country: "US",
+        postText: `post text not provided`
+
+    },
+    {
+        postId: 15,
+        username: "Ttucrabtree",
+        height: 186,
+        chest: 105,
+        waist: 77,
+        season: "summer",
+        images: ["https://i.imgur.com/n7Dyso0.jpg"],
+        postUrl: "",
+        tags: ["casual"],
+        country: "US",
+        postText: `post text not provided`
+
+    },
+
     {
         postId: 16,
         username: "Schraiber",
@@ -237,10 +292,10 @@ export const postsObjects1: PostObject[] = [
     {
         postId: 17,
         username: "Skinnygold",
-        height: 186,
-        chest: 110,
-        waist: 90,
-        season: "autumn",
+        height: 180,
+        chest: 90,
+        waist: 70,
+        season: "spring",
         images: ["https://i.imgur.com/L6LAeHy.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxuno33/?utm_source=share&utm_medium=web2x&context=3",
         tags: ["british heritage workwear", "regular fit", "straight cut"],
@@ -278,8 +333,8 @@ export const postsObjects1: PostObject[] = [
         username: "Ptubs",
         height: 186,
         chest: 110,
-        waist: 90,
-        season: "autumn",
+        waist: 100,
+        season: "spring",
         images: ["https://i.imgur.com/QgtKGyM.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/comment/hxuo7fm/?utm_source=share&utm_medium=web2x&context=3",
         tags: ["cosy"],
@@ -299,7 +354,7 @@ export const postsObjects1: PostObject[] = [
 
     {
         postId: 20,
-        username: "License2grill",
+        username: "winter",
         height: 186,
         chest: 110,
         waist: 90,
@@ -330,74 +385,20 @@ export const postsObjects1: PostObject[] = [
         country: "us",
         postText: `What I wore today`
     },
-    {
-        postId: 2,
-        username: "sexymartian",
-        height: 186,
-        chest: 100,
-        waist: 75,
-        season: "autumn",
-        images: ["https://i.imgur.com/wwVmljw.jpg"],
-        postUrl: "",
-        tags: ["linen", "button down", "chic", "light"],
-        country: "US",
-        postText: `post text not provided`
-    },
-    {
-        postId: 4,
-        username: "Purple_Skies",
-        height: 177,
-        chest: 100,
-        waist: 82,
-        season: "autumn",
-        images: ["https://i.imgur.com/PwobPfO.jpeg"],
-        postUrl: "",
-        tags: ["casual", "workwear", "avant-garde", "military"],
-        country: "US",
-        postText: `post text not provided`
 
-    },
-    {
-        postId: 5,
-        username: "Ttucrabtree",
-        height: 177,
-        chest: 100,
-        waist: 82,
-        season: "autumn",
-        images: ["https://i.imgur.com/n7Dyso0.jpg"],
-        postUrl: "",
-        tags: ["casual"],
-        country: "US",
-        postText: `post text not provided`
-
-    },
-    {
-        postId: 3,
-        username: "OldGuyWhoSitsInFront",
-        height: 177,
-        chest: 100,
-        waist: 82,
-        season: "autumn",
-        images: ["https://i.imgur.com/ihCmAto.jpeg"],
-        postUrl: "",
-        tags: [],
-        country: "US",
-        postText: `post text not provided`
-
-    },
-] 
+]
 
 
 export const postsObjects2: PostObject[] = [
-  
+
     {
         postId: 22,
         username: "homeostatic_range",
         height: 180,
         chest: 100,
         waist: 80,
-        season: "autumn",
-        images: ["https://imgur.com/a/wxVbRJO"],
+        season: "winter",
+        images: ["https://i.imgur.com/P86pCjS.jpeg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/comment/hxv163t/?utm_source=share&utm_medium=web2x&context=3",
         tags: ["workwear", "vintage"],
         country: "US",
@@ -413,7 +414,7 @@ export const postsObjects2: PostObject[] = [
         Trousers: relaxed fit cords, new black
         
         Boots: wolverines, been using them for over a decade now`,
-        round:2
+        round: 2
     },
     {
         postId: 23,
@@ -428,7 +429,7 @@ export const postsObjects2: PostObject[] = [
         country: "US",
         postText: `
         crooked stitches, patched britches`,
-        round:2
+        round: 2
     },
     {
         postId: 24,
@@ -436,7 +437,7 @@ export const postsObjects2: PostObject[] = [
         height: 180,
         chest: 100,
         waist: 80,
-        season: "autumn",
+        season: "spring",
         images: ["https://i.imgur.com/XDEBJEl.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxvpnmi/?utm_source=share&utm_medium=web2x&context=3",
         tags: ["casual", "streetwear",],
@@ -445,7 +446,7 @@ export const postsObjects2: PostObject[] = [
         First time posting. I know the pic quality is trash. Starting to revamp my style at 37.
         
         Old Navy jacket / Uniqlo Full Zip Hoodie / Urban Outfitters L/S Tee (WuTang) / Staple pants / Vans`,
-        round:2
+        round: 2
     },
     {
         postId: 25,
@@ -456,14 +457,14 @@ export const postsObjects2: PostObject[] = [
         season: "autumn",
         images: ["https://i.imgur.com/K3QmdVk.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/comment/i00gchg/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["denim", "military","grunge"],
+        tags: ["denim", "military", "grunge"],
         country: "US",
         postText: `enjoying my new kimono!
         Greg Lauren army scrapwork kimono
         Uniqlo t
         Levi's Made & Crafted shuttle jeans
         Officine Creative backzip boots`,
-        round:2
+        round: 2
     },
     {
         postId: 26,
@@ -474,7 +475,7 @@ export const postsObjects2: PostObject[] = [
         season: "autumn",
         images: ["https://i.imgur.com/zGEbCWQ.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/waywt_9_march_2022/i014g84/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["streetwear", "americana","japanese americana", "casual", "bag", "sacoche", "customized", "pinned"],
+        tags: ["streetwear", "americana", "japanese americana", "casual", "bag", "sacoche", "customized", "pinned"],
         country: "US",
         postText: `shot an awkward angle then too far away. These pants + jacket is still one or my favorite combos. I always wear the orange watch strap, but I like add another touch of orange when i can
 
@@ -485,7 +486,7 @@ export const postsObjects2: PostObject[] = [
         Kapital
         
         Visvim`,
-        round:2
+        round: 2
     },
     {
         postId: 27,
@@ -496,11 +497,11 @@ export const postsObjects2: PostObject[] = [
         season: "autumn",
         images: ["https://i.imgur.com/e7y4lnM.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/waywt_9_march_2022/i00y3v0/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["slow fashion","casual", "denim"],
+        tags: ["slow fashion", "casual", "denim"],
         country: "US",
         postText: `big shirt mode
         18 East shirt / 3sixteen black jeans / blundstones/ray ban meteor`,
-        round:2
+        round: 2
     },
     {
         postId: 28,
@@ -508,25 +509,25 @@ export const postsObjects2: PostObject[] = [
         height: 180,
         chest: 100,
         waist: 80,
-        season: "autumn",
+        season: "summer",
         images: ["https://i.imgur.com/qyQAQbC.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/comment/hzzrp2u/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["workwear","casual", "skater", "relaxed"],
+        tags: ["workwear", "casual", "skater", "relaxed"],
         country: "US",
         postText: `new double knees
         carhartt / magenta sb / carhartt / nb`,
-        round:2
+        round: 2
     },
     {
         postId: 29,
-        username: "pokemonconspiracies",
+        username: "wood-thrush",
         height: 180,
         chest: 100,
         waist: 80,
-        season: "autumn",
-        images: ["https://imgur.com/a/LiSnYZO#ANZrtpj"],
+        season: "spring",
+        images: ["https://i.imgur.com/w7KoHBH.jpeg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/waywt_9_march_2022/hzzriik/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["kilt","rugby", "avant-garde"],
+        tags: ["kilt", "rugby", "avant-garde"],
         country: "US",
         postText: `Photo dump from the weekend.
         Fit 1) Saturday morning tea.
@@ -540,7 +541,7 @@ export const postsObjects2: PostObject[] = [
         Fit 3) Errand runner
         
         Milsurp jacket/ Chaps/ Polo RL/ Deerstags`,
-        round:2
+        round: 2
     },
     {
         postId: 30,
@@ -548,7 +549,7 @@ export const postsObjects2: PostObject[] = [
         height: 180,
         chest: 100,
         waist: 80,
-        season: "autumn",
+        season: "summer",
         images: ["https://i.imgur.com/JgyrZkh"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxv6mkv/?utm_source=share&utm_medium=web2x&context=3",
         tags: ["casual-ivy"],
@@ -559,15 +560,15 @@ export const postsObjects2: PostObject[] = [
         New Balance`,
         round: 2
     },
-    
+
     {
         postId: 31,
         username: "teawhyellieare",
         height: 180,
         chest: 100,
         waist: 80,
-        season: "autumn",
-        images: ["https://imgur.com/a/n3ulesC"],
+        season: "summer",
+        images: ["https://i.imgur.com/fC02rxM.jpeg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxv61gd/?utm_source=share&utm_medium=web2x&context=3",
         tags: ["casual"],
         country: "US",
@@ -581,8 +582,8 @@ export const postsObjects2: PostObject[] = [
         rhythm pants
         
         sabah shoes`,
-        round:2
+        round: 2
     },
-    ]
+]
 
-export const postsObjects : PostObject[] = postsObjects1.concat(postsObjects2);
+export const postsObjects: PostObject[] = postsObjects1.concat(postsObjects2);

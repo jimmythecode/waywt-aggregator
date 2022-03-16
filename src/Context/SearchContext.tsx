@@ -1,8 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import {
+  FilterAction,
+  FilterObjectCheckbox,
+  filterReducer,
+  FilterState,
+} from '../Reducers/filterReducer';
 import { PostObject, postsObjects } from '../utils/dataObjects';
 import { LoggingContext } from './LoggingContext';
-
-export type FilterObject = Record<string, { checked: boolean; disabled: boolean }>;
 
 function getStringOfIds(postsObject: PostObject[]): string {
   return postsObject
@@ -15,15 +19,17 @@ export type FilterLabel = 'any' | 'styleTags' | 'updateResults';
 
 interface SearchContextInterface {
   initialFilteredPostsObjects: PostObject[];
-  filteredPostsInternal: PostObject[];
-  setFilteredPostsInternal: React.Dispatch<React.SetStateAction<PostObject[]>>;
-  filteredPosts: PostObject[];
-  setFilteredPosts: React.Dispatch<React.SetStateAction<PostObject[]>>;
-  styleFilterObject: FilterObject;
-  setStyleFilterObject: React.Dispatch<React.SetStateAction<FilterObject>>;
+  // filteredPostsInternal: PostObject[];
+  // setFilteredPostsInternal: React.Dispatch<React.SetStateAction<PostObject[]>>;
+  // filteredPosts: PostObject[];
+  // setFilteredPosts: React.Dispatch<React.SetStateAction<PostObject[]>>;
+  // styleFilterObject: FilterObject;
+  // setStyleFilterObject: React.Dispatch<React.SetStateAction<FilterObject>>;
   updateResults: () => void;
   resultsUpToDate: boolean;
-  updateFilterUpdateTimestamps: (filterLabel: FilterLabel) => void;
+  // updateFilterUpdateTimestamps: (filterLabel: FilterLabel) => void;
+  filterState: FilterState;
+  dispatchFilter: React.Dispatch<FilterAction>;
 }
 
 export const SearchContext = React.createContext<SearchContextInterface>(
@@ -37,22 +43,7 @@ export default function SearchContextProvider(props: { children: React.ReactNode
   const initialFilteredPostsObjects = postsObjects;
   const [filteredPostsInternal, setFilteredPostsInternal] = useState(initialFilteredPostsObjects);
   const [filteredPosts, setFilteredPosts] = useState(initialFilteredPostsObjects);
-  const [filterUpdateTimestamps, setFilterUpdateTimestamps] = useState<Record<FilterLabel, string>>(
-    {
-      styleTags: new Date().toUTCString(),
-      any: new Date().toUTCString(),
-      updateResults: new Date().toUTCString(),
-    }
-  );
   const [resultsUpToDate, setResultsUpToDate] = useState(false);
-
-  function updateFilterUpdateTimestamps(filterLabel: FilterLabel): void {
-    setFilterUpdateTimestamps((prev) => ({
-      ...prev,
-      [filterLabel]: new Date().toUTCString(),
-      any: new Date().toUTCString(),
-    }));
-  }
 
   // Take all of the tag string labels from each post object and create an array of unique, sorted labels for the filter checkboxes
   const reducedUniqueStyles = React.useMemo(
@@ -66,100 +57,108 @@ export default function SearchContextProvider(props: { children: React.ReactNode
   );
   const initialStyleFilterObject = React.useMemo(
     () =>
-      reducedUniqueStyles.reduce<FilterObject>((prev, cur) => {
+      reducedUniqueStyles.reduce<FilterObjectCheckbox>((prev, cur) => {
         const returnObj = { ...prev };
         returnObj[cur] = { checked: false, disabled: false };
         return returnObj;
       }, {}),
     []
   );
-  const [styleFilterObject, setStyleFilterObject] = useState(initialStyleFilterObject);
+
+  // Create filter object for users from the array of posts.
+  const initialUsersFilterObject = React.useMemo(
+    () =>
+      [...new Set(initialFilteredPostsObjects.map((thisPost) => thisPost.username))]
+        .sort()
+        .reduce<FilterObjectCheckbox>((prev, cur) => {
+          const returnObj = { ...prev };
+          returnObj[cur] = { checked: false, disabled: false };
+          return returnObj;
+        }, {}),
+    []
+  );
+
+  // Create filter object for colorSeasons from the array of posts.
+  const initialColorSeasonsFilterObject = React.useMemo(
+    () =>
+      [...new Set(initialFilteredPostsObjects.map((thisPost) => thisPost.season))]
+        .sort()
+        .reduce<FilterObjectCheckbox>((prev, cur) => {
+          const returnObj = { ...prev };
+          returnObj[cur] = { checked: false, disabled: false };
+          return returnObj;
+        }, {}),
+    []
+  );
+
+  const initialPostsArrayIds = React.useMemo(
+    () => initialFilteredPostsObjects.map((x) => x.postId),
+    initialFilteredPostsObjects
+  );
+
+  const initialReducerState: FilterState = {
+    initialArrayOfPosts: initialFilteredPostsObjects,
+    internalFilteredPosts: initialFilteredPostsObjects,
+    externalFilteredPosts: initialFilteredPostsObjects,
+    filterCheckboxObjects: {
+      styles: initialStyleFilterObject,
+      users: initialUsersFilterObject,
+      colorSeasons: initialColorSeasonsFilterObject,
+    },
+    filterSliderObjects: {
+      height: {
+        min: 0,
+        max: 0,
+        disabled: false,
+      },
+      chest: {
+        min: 0,
+        max: 0,
+        disabled: false,
+      },
+      waist: {
+        min: 0,
+        max: 0,
+        disabled: false,
+      },
+    },
+    postIdArrays: {
+      styles: initialPostsArrayIds,
+      users: initialPostsArrayIds,
+      height: initialPostsArrayIds,
+      chest: initialPostsArrayIds,
+      waist: initialPostsArrayIds,
+      colorSeasons: initialPostsArrayIds,
+    },
+    timestamps: {
+      styles: new Date().toUTCString(),
+      users: new Date().toUTCString(),
+      height: new Date().toUTCString(),
+      chest: new Date().toUTCString(),
+      waist: new Date().toUTCString(),
+      colorSeasons: new Date().toUTCString(),
+      internalFilteredPosts: new Date().toUTCString(),
+      externalFilteredPosts: new Date().toUTCString(),
+    },
+  };
+
+  const [filterState, dispatchFilter] = React.useReducer(filterReducer, initialReducerState);
 
   function updateResults(): void {
     addLog('Clicked Update Results Button');
-    updateFilterUpdateTimestamps('updateResults');
-    setFilteredPosts(filteredPostsInternal);
+    dispatchFilter({ type: 'update external' });
+    // setFilteredPosts(filteredPostsInternal);
   }
-
-  // const initialPostsSimplifiedToIdsforCheck = getStringOfIds(initialFilteredPostsObjects);
-  useEffect(() => {
-      const filteredPostsSimplifiedForDependencyCheck = getStringOfIds(filteredPosts);
-      const filteredPostsInternalSimplifiedForDependencyCheck = getStringOfIds(
-        filteredPostsInternal
-      );
-      setResultsUpToDate(
-        filteredPostsInternalSimplifiedForDependencyCheck ===
-          filteredPostsSimplifiedForDependencyCheck
-      );
-  }, [
-    // styleFilterObject, 
-    // filterUpdateTimestamps, 
-    filteredPostsInternal, filteredPosts
-  ]);
-
-  // const tagLabelsCheckedOnly = Object.keys(styleFilterObject).filter(
-  //   (thisLabel) => styleFilterObject[thisLabel].checked === true
-  // );
-
-  // TODO: I've saved this original working code here while I look at async alternatives.
-  // useEffect(() => {
-  //   // If all of the boxes are unchecked, then don't filter anything
-  //   if (tagLabelsCheckedOnly.length === 0) {
-  //     setFilteredPostsInternal(() => initialFilteredPostsObjects);
-  //   } else {
-  //     // Else if some boxes are checked
-  //     setFilteredPostsInternal(() => {
-  //       const arrayOfUncheckedStyleTagLabels = Object.keys(styleFilterObject).filter(
-  //         (thisLabel) => styleFilterObject[thisLabel].checked
-  //       );
-  //       const returnArr = initialFilteredPostsObjects.filter((thisPostObj) =>
-  //         thisPostObj.tags.some((thisTagLabel) =>
-  //           arrayOfUncheckedStyleTagLabels.includes(thisTagLabel)
-  //         )
-  //       );
-  //       return returnArr;
-  //     });
-  //   }
-  // }, [filterUpdateTimestamps.styleTags, styleFilterObject]);
-
-  useEffect(() => {
-    // If all of the boxes are unchecked, then don't filter anything
-    if (
-      Object.keys(styleFilterObject).filter(
-        (thisLabel) => styleFilterObject[thisLabel].checked === true
-      ).length === 0
-    ) {
-      setFilteredPostsInternal(() => initialFilteredPostsObjects);
-    } else {
-      // Else if some boxes are checked
-      setFilteredPostsInternal(() => {
-        const arrayOfUncheckedStyleTagLabels = Object.keys(styleFilterObject).filter(
-          (thisLabel) => styleFilterObject[thisLabel].checked
-        );
-        const returnArr = initialFilteredPostsObjects.filter((thisPostObj) =>
-          thisPostObj.tags.some((thisTagLabel) =>
-            arrayOfUncheckedStyleTagLabels.includes(thisTagLabel)
-          )
-        );
-        return returnArr;
-      });
-    }
-  }, [filterUpdateTimestamps.styleTags, styleFilterObject]);
 
   const value = React.useMemo(
     () => ({
       initialFilteredPostsObjects,
-      filteredPostsInternal,
-      setFilteredPostsInternal,
-      filteredPosts,
-      setFilteredPosts,
-      styleFilterObject,
-      setStyleFilterObject,
       updateResults,
       resultsUpToDate,
-      updateFilterUpdateTimestamps,
+      filterState,
+      dispatchFilter,
     }),
-    [styleFilterObject, filteredPostsInternal, filteredPosts, resultsUpToDate]
+    [resultsUpToDate, filterState]
   );
 
   return <SearchContext.Provider value={value} {...props} />;

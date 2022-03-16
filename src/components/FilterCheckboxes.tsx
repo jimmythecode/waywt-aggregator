@@ -11,13 +11,23 @@ import {
 import Fuse from 'fuse.js';
 import React, { SyntheticEvent, useContext, useState } from 'react';
 import { LoggingContext } from '../Context/LoggingContext';
-import { FilterObject, SearchContext } from '../Context/SearchContext';
-import { logAdminExternal } from '../utils/logging';
+import {
+  FilterAction,
+  FilterObjectCheckbox,
+  FilterTypeLabelsCheckbox,
+} from '../Reducers/filterReducer';
 import FilterCheckbox from './FilterCheckbox';
 
-function FilterCheckboxes({filterObject, setFilterObject}: {filterObject: FilterObject, setFilterObject: React.Dispatch<React.SetStateAction<FilterObject>>}) {
-  const { updateFilterUpdateTimestamps } =
-    useContext(SearchContext);
+function FilterCheckboxes({
+  filterObject,
+  dispatchFilter,
+  filterLabel,
+}: {
+  filterObject: FilterObjectCheckbox;
+  dispatchFilter: React.Dispatch<FilterAction>;
+  filterLabel: FilterTypeLabelsCheckbox;
+}) {
+  // const { updateFilterUpdateTimestamps } = useContext(SearchContext);
   const { addLog } = useContext(LoggingContext);
   const [showTextInput, setShowTextInput] = useState(false);
   const [textSearchInputState, setTextSearchInputState] = useState('');
@@ -42,42 +52,43 @@ function FilterCheckboxes({filterObject, setFilterObject}: {filterObject: Filter
 
   return (
     <FormGroup sx={{ marginLeft: '16px' }}>
-      <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-        <FormControlLabel // Select all checkbox
-          sx={{
-            display: !showTextInput ? 'auto' : 'none',
-          }}
-          control={
-            <Checkbox // select all checkbox
-              checked={!Object.values(filterObject).some((x) => x.checked === false)}
-              onChange={(event: SyntheticEvent<Element, Event>, checked: boolean) => {
-                addLog(`Clicked Checkbox for '${'Select All'}'`);
-                updateFilterUpdateTimestamps('styleTags');
-                setFilterObject((prev) => {
-                  const returnObj = { ...prev };
-                  Object.keys(prev).forEach((label) => {
-                    returnObj[label].checked = checked;
+      <Box sx={{ display: 'grid', width: '100%', gridTemplateColumns: '1fr 90px' }}>
+        <Box sx={{display: "flex"}}>
+        <Collapse in={!showTextInput} orientation='horizontal' >
+          <FormControlLabel // Select all checkbox
+            sx={{
+              display: !showTextInput ? 'auto' : 'none', whiteSpace: "nowrap"
+            }}
+            control={
+              <Checkbox // select all checkbox
+                checked={!Object.values(filterObject).some((x) => x.checked === false)}
+                onChange={(event: SyntheticEvent<Element, Event>, checked: boolean) => {
+                  addLog(`Clicked Checkbox for '${'Select All'}'`);
+                  dispatchFilter({
+                    type: 'click select all checkbox',
+                    filterLabel,
+                    checked,
                   });
-                  return returnObj;
-                });
-              }}
-              name='Select All'
-            />
-          }
-          label='Select All'
-        />
-        <Collapse in={showTextInput} orientation='horizontal'>
-          <TextField
-            id='checkbox-search-textfield'
-            label='Search for tags'
-            variant='outlined'
-            value={textSearchInputState}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setTextSearchInputState(event.target.value)
+                }}
+                name='Select All'
+              />
             }
+            label='Select All'
           />
-        </Collapse>
-        <Button
+          </Collapse>
+          <Collapse in={showTextInput} orientation='horizontal'>
+            <TextField // Search text input
+              id='checkbox-search-textfield'
+              label='Search for tags'
+              variant='outlined'
+              value={textSearchInputState}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setTextSearchInputState(event.target.value)
+              }
+            />
+          </Collapse>
+        </Box>
+        <Button // Text/Select All Button Toggle
           onClick={() => {
             setTextSearchInputState('');
             setShowTextInput((prev) => !prev);
@@ -88,13 +99,13 @@ function FilterCheckboxes({filterObject, setFilterObject}: {filterObject: Filter
             width: '80px',
           }}
         >
-          {!showTextInput ? 'Search Input' : 'Select All'}
+          {!showTextInput ? 'Text Search' : 'Select All'}
         </Button>
       </Box>
       <Divider // Separates Select All Checkbox from other Checkboxes
       />
       {arrayOfFilteredCheckboxLabels.map((thisLabel) => (
-        <FilterCheckbox thisLabel={thisLabel} key={thisLabel} />
+        <FilterCheckbox thisLabel={thisLabel} key={thisLabel} filterLabel={filterLabel} />
       ))}
     </FormGroup>
   );

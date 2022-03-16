@@ -521,6 +521,9 @@ function ResultCard({ postObject }: { postObject: PostObject }) {
             gridRow: {
               xs: 1,
             },
+            display: "flex",
+            justifyContent: "center",
+            alignItems:"center"
             // gridColumnStart: 1,
           }}
           component='a'
@@ -547,4 +550,4 @@ function ResultCard({ postObject }: { postObject: PostObject }) {
   );
 }
 
-export default React.memo(ResultCard)
+export default ResultCard;
