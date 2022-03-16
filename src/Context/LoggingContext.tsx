@@ -39,6 +39,11 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
     latestLocalLogId: 0,
     logOfUserActions: [],
   });
+  const [intervalStateObject, setIntervalStateObject] = useState({
+    intervalSeconds: 15,
+    updateString: "initialised",
+    timeElapsed: 0,
+  })
 
   function addLog(action: string) {
     setSessionState((prev) => ({
@@ -91,9 +96,10 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
       secondsPassed: sessionState.secondsPassed + 15,
       logOfUserActions: sessionState.logOfUserActions,
     });
+    setIntervalStateObject(prev=>({...prev, timeElapsed: prev.timeElapsed + prev.intervalSeconds}))
     setSessionState((prev) => ({
       ...prev,
-      secondsPassed: prev.secondsPassed + 15,
+      secondsPassed: prev.secondsPassed + intervalStateObject.intervalSeconds,
     }));
 
     // Send SessionData to Back End
@@ -107,11 +113,15 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
           localTimestamp: new Date().toISOString(),
           action: 'interval elapsed with no actions recorded',
           sessionId: sessionState.sessionId,
-          secondsPassed: sessionState.secondsPassed + 15,
+          secondsPassed: sessionState.secondsPassed + intervalStateObject.intervalSeconds,
         },
       ];
       latestLocalLogIdTracker += 1;
+      setIntervalStateObject(prev=>({...prev, intervalSeconds: prev.intervalSeconds * 2, updateString: "doubled delay as no actions recorded"}))
+    } else if (arrayToSend.length > 0){
+      setIntervalStateObject(prev=>({...prev, intervalSeconds: 15, updateString: "actions were recorded. Set delay to 15."}))
     }
+
     // Update SessionState
     await fetchPostBase('/analytics/interval', JSON.stringify({logOfUserActions: arrayToSend}));
 
@@ -121,7 +131,7 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
         (thisObj) => thisObj.localLogId > latestLocalLogIdTracker
       ),
     }));
-  }, 15000);
+  }, intervalStateObject.intervalSeconds*1000);
 
   useEffect(() => {
     // TODO: Need to turn this on when going live
