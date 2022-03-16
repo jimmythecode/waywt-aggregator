@@ -99,6 +99,7 @@ export default function NavBar() {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
+      sx={{zIndex: 3000}}
     >
       {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
       <MenuItem onClick={handleMenuClose}>
