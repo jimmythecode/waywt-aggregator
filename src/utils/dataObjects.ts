@@ -61,7 +61,7 @@ export const postsObjects1: PostObject[] = [
         season: "autumn",
         images: ["https://i.imgur.com/NhhNjvM.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxuu752/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["casual", "relaxed", "leisure"],
+        tags: ["casual", "relaxed-fit", "leisure"],
         country: "US",
         postText: `botanical garden fit
         Pendleton (thrifted), J. Crew (left at my house by anonymous), LL Bean (thrifted), Chaco`
@@ -93,7 +93,7 @@ export const postsObjects1: PostObject[] = [
     },
     {
         postId: 5,
-        username: "winter",
+        username: "bchanx",
         height: 178,
         chest: 95,
         waist: 80,
@@ -123,7 +123,7 @@ export const postsObjects1: PostObject[] = [
         season: "summer",
         images: ["https://i.imgur.com/icXQl3g.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/comment/hxuoyxz/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ['casual', 'workwear', 'streetwear', 'neo-prep', 'vintage', 'rugged Ivy', 'relaxed fit'],
+        tags: ['casual', 'workwear', 'streetwear', 'neo-prep', 'vintage', 'rugged Ivy', 'relaxed-fit'],
         country: "US",
         postText: `EG/Wythe/Vintage Levi’s/Aldens
         Knickerbocker/Vintage/LWC/Vintage Levi’s/NB993`
@@ -137,7 +137,7 @@ export const postsObjects1: PostObject[] = [
         season: "spring",
         images: ["https://imgur.com/LIlYHwn"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxv0uyn/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["casual", "workwear", "streetwear", "neo-prep", "vintage", "rugged Ivy", "relaxed fit"],
+        tags: ["casual", "workwear", "streetwear", "neo-prep", "vintage", "rugged Ivy", "relaxed-fit"],
         country: "US",
         postText: `Casual Monday from Saturday I think
         stan ray/patagonia/levis/russell`
@@ -181,7 +181,7 @@ export const postsObjects1: PostObject[] = [
         season: "winter",
         images: ["https://i.imgur.com/g2ExOUO.jpeg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/waywt_21_february_2022/hxuqwwh/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["casual", "americana", "loose fit", "cosy"],
+        tags: ["casual", "americana", "loose fit", "cozy"],
         country: "US",
         postText: `https://imgur.com/a/DibFTXZ
         Stan Ray/Dickies/Converse`
@@ -337,7 +337,7 @@ export const postsObjects1: PostObject[] = [
         season: "spring",
         images: ["https://i.imgur.com/QgtKGyM.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/sxyelb/comment/hxuo7fm/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["cosy"],
+        tags: ["cozy"],
         country: "us",
         postText: `Yesterday
 
@@ -354,7 +354,7 @@ export const postsObjects1: PostObject[] = [
 
     {
         postId: 20,
-        username: "winter",
+        username: "License2grill",
         height: 186,
         chest: 110,
         waist: 90,
@@ -385,12 +385,10 @@ export const postsObjects1: PostObject[] = [
         country: "us",
         postText: `What I wore today`
     },
-
 ]
 
 
 export const postsObjects2: PostObject[] = [
-
     {
         postId: 22,
         username: "homeostatic_range",
@@ -411,7 +409,7 @@ export const postsObjects2: PostObject[] = [
         
         Shirt: vintage flannel shirt
         
-        Trousers: relaxed fit cords, new black
+        Trousers: relaxed-fit cords, new black
         
         Boots: wolverines, been using them for over a decade now`,
         round: 2
@@ -512,7 +510,7 @@ export const postsObjects2: PostObject[] = [
         season: "summer",
         images: ["https://i.imgur.com/qyQAQbC.jpg"],
         postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/comment/hzzrp2u/?utm_source=share&utm_medium=web2x&context=3",
-        tags: ["workwear", "casual", "skater", "relaxed"],
+        tags: ["workwear", "casual", "skater", "relaxed-fit"],
         country: "FR",
         postText: `new double knees
         carhartt / magenta sb / carhartt / nb`,
@@ -560,7 +558,6 @@ export const postsObjects2: PostObject[] = [
         New Balance`,
         round: 2
     },
-
     {
         postId: 31,
         username: "teawhyellieare",
@@ -586,4 +583,54 @@ export const postsObjects2: PostObject[] = [
     },
 ]
 
-export const postsObjects: PostObject[] = postsObjects1.concat(postsObjects2);
+export const postsObjects3: PostObject[] = [
+    {
+        postId: 32,
+        username: "BenJSev",
+        height: 182,
+        chest: 105,
+        waist: 75,
+        season: "summer",
+        images: ["https://i.imgur.com/VVfOv9I.jpg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/waywt_9_march_2022/hzzri4w/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["workwear", "casual", "vintage"],
+        country: "US",
+        postText: `Trying out loafers
+        Thrifted these bass loafers, so I tossed them on!
+        
+        Gap trucker, Uniqlo t, Uniqlo selvedge, bass loafers`,
+        round: 3
+    },
+    {
+        postId: 33,
+        username: "DangerG",
+        height: 176,
+        chest: 105,
+        waist: 72,
+        season: "autumn",
+        images: ["https://i.imgur.com/E6ot2nT.jpg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/waywt_9_march_2022/hzzuxg3/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["western", "casual"],
+        country: "US",
+        postText: `ALD made me do it
+        All thrifted outfit.`,
+        round: 3
+    },
+    {
+        postId: 34,
+        username: "KoalasAreNotBears",
+        height: 176,
+        chest: 105,
+        waist: 72,
+        season: "autumn",
+        images: ["https://i.imgur.com/23h5gc5.jpeg"],
+        postUrl: "https://www.reddit.com/r/malefashionadvice/comments/tac9el/waywt_9_march_2022/hzzrl4r/?utm_source=share&utm_medium=web2x&context=3",
+        tags: ["workwear", "casual"],
+        country: "US",
+        postText: `mostly brown
+        Uniqlo | Sears | Beams+ | Levi's | Grant Stone`,
+        round: 3
+    },
+]
+
+export const postsObjects: PostObject[] = postsObjects1.concat(postsObjects2, postsObjects3);
