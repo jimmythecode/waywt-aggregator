@@ -41,7 +41,7 @@ export default function SearchPage() {
               '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
             }}
           >
-            {filterMobileOpen && <Filter origin="narrow"/>}
+            {filterMobileOpen && <Filter origin='narrow' />}
           </Drawer>
           {/* Drawer with filter if wide screen */}
           <Drawer
@@ -52,14 +52,15 @@ export default function SearchPage() {
             }}
             open={!filterMobileOpen}
           >
-            {!filterMobileOpen && <Filter origin="wide" />}
+            {!filterMobileOpen && <Filter origin='wide' />}
           </Drawer>
         </Box>
         <Box // The main section containing results
           component='main'
           sx={{
             flexGrow: 1,
-            p: 3,
+            // TODO: Padding no good on mobile
+            sm: { p: 3 },
             width: { md: `calc(100% - ${drawerWidth}px)` },
             backgroundColor: '#E7EBF0',
           }}

@@ -20,12 +20,13 @@ import SizeSlider from './SizeSlider';
 function Filter({ origin }: { origin: string }) {
   const {
     updateResults,
-    resultsUpToDate,
+    // resultsUpToDate,
     initialFilteredPostsObjects,
     filterState,
     dispatchFilter,
   } = useContext(SearchContext);
   const { filterMobileOpen } = React.useContext(GlobalContext);
+  const [resultsUpToDate, setResultsUpToDate] = useState(true);
   const { addLog } = useContext(LoggingContext);
   const [dropDownOpen, setDropDownOpen] = useState({
     styles: false,
@@ -46,6 +47,36 @@ function Filter({ origin }: { origin: string }) {
     setDropDownOpen((prev) => ({ ...prev, [label]: !prev[label] }));
   }
 
+  React.useEffect(() => {
+    const { externalFilteredPosts, internalFilteredPosts } = filterState;
+    // We want to setResultsUpToDate(false) if there has been a change to the internalFilteredPosts that hasn't been updated in the externalFilteredPosts
+    if (resultsUpToDate) {
+      if (
+        // First, check if externalFilteredPosts is the least recent. If so, the results may not be up to date.
+        filterState.timestamps.externalFilteredPosts <
+          filterState.timestamps.internalFilteredPosts &&
+        // Second, check the post lengths are the different. If they are, the results are not up to date
+        (externalFilteredPosts.length !== internalFilteredPosts.length ||
+          // Third, iterate through the arrays to check if they are the different. If they are different, the results are not up to date and we want to setResultsUpToDate to false
+          externalFilteredPosts.filter(
+            (thisExtObj, index) => thisExtObj.postId !== internalFilteredPosts[index].postId
+          ).length !== 0)
+      ) {
+        setResultsUpToDate(false);
+      }
+      // else if resultsUpToDate === false, then we need to check if we want to setResultsUpToDate(true); ie, are the results now up to date?
+    } else if (
+      // The results are up to date if the lengths are the same and the filters match
+      (externalFilteredPosts.length === internalFilteredPosts.length &&
+        // Third, iterate through the arrays to check if they are the different. If they are different, the results are not up to date and we want to setResultsUpToDate to false
+        externalFilteredPosts.filter(
+          (thisExtObj, index) => thisExtObj.postId !== internalFilteredPosts[index].postId
+        ).length === 0)
+    ) {
+      setResultsUpToDate(true);
+    }
+  }, [filterState.timestamps.externalFilteredPosts, filterState.timestamps.internalFilteredPosts]);
+
   return (
     <Box>
       <Toolbar />
@@ -54,6 +85,7 @@ function Filter({ origin }: { origin: string }) {
         <Button
           sx={{ position: 'fixed', zIndex: 1000 }}
           color={resultsUpToDate ? 'success' : 'secondary'}
+          disabled={resultsUpToDate}
           onClick={updateResults}
           variant='contained'
         >

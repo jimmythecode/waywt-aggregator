@@ -6,6 +6,7 @@ import {
   FilterState,
 } from '../Reducers/filterReducer';
 import { PostObject, postsObjects } from '../utils/dataObjects';
+import { GlobalContext } from './GlobalContext';
 import { LoggingContext } from './LoggingContext';
 
 function getStringOfIds(postsObject: PostObject[]): string {
@@ -26,7 +27,7 @@ interface SearchContextInterface {
   // styleFilterObject: FilterObject;
   // setStyleFilterObject: React.Dispatch<React.SetStateAction<FilterObject>>;
   updateResults: () => void;
-  resultsUpToDate: boolean;
+  // resultsUpToDate: boolean;
   // updateFilterUpdateTimestamps: (filterLabel: FilterLabel) => void;
   filterState: FilterState;
   dispatchFilter: React.Dispatch<FilterAction>;
@@ -43,7 +44,7 @@ export default function SearchContextProvider(props: { children: React.ReactNode
   const initialFilteredPostsObjects = postsObjects;
   const [filteredPostsInternal, setFilteredPostsInternal] = useState(initialFilteredPostsObjects);
   const [filteredPosts, setFilteredPosts] = useState(initialFilteredPostsObjects);
-  const [resultsUpToDate, setResultsUpToDate] = useState(false);
+  // const [resultsUpToDate, setResultsUpToDate] = useState(false);
 
   // Take all of the tag string labels from each post object and create an array of unique, sorted labels for the filter checkboxes
   const reducedUniqueStyles = React.useMemo(
@@ -107,18 +108,18 @@ export default function SearchContextProvider(props: { children: React.ReactNode
     },
     filterSliderObjects: {
       height: {
-        min: 0,
-        max: 0,
+        min: 140,
+        max: 240,
         disabled: false,
       },
       chest: {
-        min: 0,
-        max: 0,
+        min: 40,
+        max: 160,
         disabled: false,
-      },
+      },  
       waist: {
-        min: 0,
-        max: 0,
+        min: 40,
+        max: 160,
         disabled: false,
       },
     },
@@ -143,10 +144,15 @@ export default function SearchContextProvider(props: { children: React.ReactNode
   };
 
   const [filterState, dispatchFilter] = React.useReducer(filterReducer, initialReducerState);
+  const { filterMobileOpen, setFilterMobileOpen } = React.useContext(GlobalContext);
+
 
   function updateResults(): void {
     addLog('Clicked Update Results Button');
     dispatchFilter({ type: 'update external' });
+    if(filterMobileOpen){
+      setFilterMobileOpen(false)
+    }
     // setFilteredPosts(filteredPostsInternal);
   }
 
@@ -154,11 +160,13 @@ export default function SearchContextProvider(props: { children: React.ReactNode
     () => ({
       initialFilteredPostsObjects,
       updateResults,
-      resultsUpToDate,
+      // resultsUpToDate,
       filterState,
       dispatchFilter,
     }),
-    [resultsUpToDate, filterState]
+    [
+      // resultsUpToDate,
+       filterState]
   );
 
   return <SearchContext.Provider value={value} {...props} />;

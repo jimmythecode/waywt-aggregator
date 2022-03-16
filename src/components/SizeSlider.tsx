@@ -31,8 +31,8 @@ function SizeSlider({
 }) {
   const { userDetails } = useContext(UserContext);
   const { addLog } = useContext(LoggingContext);
-  const [value, setValue] = React.useState<number[]>(initialValues[filterLabel]);
-  const [disabledState, setDisabledState] = React.useState(true);
+  const [value, setValue] = React.useState<number[]>([filterObject.min, filterObject.max]);
+  const [disabledState, setDisabledState] = React.useState(filterObject.disabled);
   const [tooltipOpenState, setTooltipOpenState] = React.useState(false);
 
   // Close tooltip after a short time
@@ -76,6 +76,30 @@ function SizeSlider({
     return () => clearTimeout(delayDebounceFn);
   }, [value[0], value[1]]);
 
+  // Debounce disable/enable slider from local state
+  React.useEffect(() => {
+    function updateWhenCheckboxClicked() {
+                    if (!disabledState) {
+                      // If we enable slider (disabledState=false), then update slider: 
+                      dispatchFilter({
+                        type: 'update slider',
+                        filterLabel,
+                        min: value[0],
+                        max: value[1],
+                      });
+                    } else {
+                      dispatchFilter({
+                        type: 'disable slider',
+                        filterLabel,
+                      });
+                    }
+    }
+    const delayDebounceFn = setTimeout(() => {
+      updateWhenCheckboxClicked();
+    }, 100);
+    return () => clearTimeout(delayDebounceFn);
+  }, [disabledState]);
+
   return (
     <Box sx={{ width: '80%', margin: 'auto' }}>
       <br />
@@ -97,20 +121,20 @@ function SizeSlider({
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     addLog(`Clicked enable/disable button for ${filterLabel} slider`);
                     setDisabledState(!event.target.checked);
-                    if (event.target.checked) {
-                      // If we enable slider, then update slider: 
-                      dispatchFilter({
-                        type: 'update slider',
-                        filterLabel,
-                        min: value[0],
-                        max: value[1],
-                      });
-                    } else {
-                      dispatchFilter({
-                        type: 'disable slider',
-                        filterLabel,
-                      });
-                    }
+                    // if (event.target.checked) {
+                    //   // If we enable slider, then update slider: 
+                    //   dispatchFilter({
+                    //     type: 'update slider',
+                    //     filterLabel,
+                    //     min: value[0],
+                    //     max: value[1],
+                    //   });
+                    // } else {
+                    //   dispatchFilter({
+                    //     type: 'disable slider',
+                    //     filterLabel,
+                    //   });
+                    // }
                   }}
                   color='success'
                 />

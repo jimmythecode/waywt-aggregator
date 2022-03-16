@@ -32,7 +32,6 @@ export const LoggingContext = React.createContext<LoggingContextInterface>(
 
 export default function LoggingContextProvider(props: { children: React.ReactNode }) {
   const { enqueueSnackbar } = useSnackbar();
-  // const [logOfUserActions, setLogOfUserActions] = useState<LoggingObject[]>([]);
   const [sessionState, setSessionState] = useState<SessionState>({
     sessionId: '',
     secondsPassed: 0,
@@ -65,11 +64,6 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
     const deviceDataObject = getDeviceData();
     const ipObject = await fetchIpApiObject();
     const geolocationObject = await fetchGeolocationApi();
-    logAdminExternal({
-      ipObject,
-      geolocationObject,
-      deviceDataObject,
-    });
     const postToBackEndForSessionId = await fetchPostBase(
       '/analytics/initial',
       JSON.stringify({ ipObject, geolocationObject, deviceDataObject })
@@ -87,12 +81,6 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
   useInterval(async () => {
     if (process.env.NODE_ENV === 'development') return;
 
-    logAdminExternal({
-      status: 'sending interval analytics',
-      sessionId: sessionState.sessionId,
-      secondsPassed: sessionState.secondsPassed + 15,
-      logOfUserActions: sessionState.logOfUserActions,
-    });
     setSessionState((prev) => ({
       ...prev,
       secondsPassed: prev.secondsPassed + 15,
@@ -122,6 +110,7 @@ export default function LoggingContextProvider(props: { children: React.ReactNod
       logOfUserActions: prev.logOfUserActions.filter(
         (thisObj) => thisObj.localLogId > latestLocalLogIdTracker
       ),
+      latestLocalLogId: latestLocalLogIdTracker,
     }));
   }, 15000);
 

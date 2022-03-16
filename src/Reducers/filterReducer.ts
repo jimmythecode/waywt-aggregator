@@ -10,6 +10,8 @@ export interface FilterObjectSlider {
     disabled: boolean
 }
 
+export type TimestampsObject = Record<FilterTypeLabelsCheckbox | FilterTypeLabelsSlider | "internalFilteredPosts" | "externalFilteredPosts", string>;
+
 export interface FilterState {
     initialArrayOfPosts: PostObject[],
     internalFilteredPosts: PostObject[],
@@ -17,7 +19,7 @@ export interface FilterState {
     filterSliderObjects: Record<FilterTypeLabelsSlider, FilterObjectSlider>;
     externalFilteredPosts: PostObject[];
     postIdArrays: Record<FilterTypeLabelsCheckbox | FilterTypeLabelsSlider, number[]>;
-    timestamps: Record<FilterTypeLabelsCheckbox | FilterTypeLabelsSlider | "internalFilteredPosts" | "externalFilteredPosts", string>;
+    timestamps: TimestampsObject;
 }
 
 export interface FilterActionCheckboxBase {
@@ -71,11 +73,13 @@ export function filterByOtherMemoisedIds(initialFilteredPosts: PostObject[], arr
 
 export function filterReducer(state: FilterState, action: FilterAction) {
     const returnState = { ...state };
+    const currentTimestamp = new Date().toUTCString()
     switch (action.type) {
         case "click select all checkbox": {
             // Will need to update: timestamps, internalFilterObject, postIdArrays, internalFilteredPosts
             // Update timestamp for memo comparisons
-            returnState.timestamps[action.filterLabel] = new Date().toUTCString();
+            returnState.timestamps[action.filterLabel] = currentTimestamp;
+            returnState.timestamps.internalFilteredPosts = currentTimestamp;
             // Update filterObjects to update inputs (checkboxes, sliders, etc)
             // Iterate through all unique labels and check/uncheck all boxes depending on whether 'select all' checkbox is checked.
             Object.keys(returnState.filterCheckboxObjects[action.filterLabel]).forEach(thisLabel => {
@@ -120,7 +124,8 @@ export function filterReducer(state: FilterState, action: FilterAction) {
         case "click single checkbox": {
             // Will need to update: timestamps, internalFilterObject, postIdArrays, internalFilteredPosts
             // Update timestamp for memo comparisons
-            returnState.timestamps[action.filterLabel] = new Date().toUTCString();
+            returnState.timestamps[action.filterLabel] = currentTimestamp;
+            returnState.timestamps.internalFilteredPosts = currentTimestamp;
             // Update filterObjects to update inputs (checkboxes, sliders, etc)
             Object.keys(returnState.filterCheckboxObjects[action.filterLabel])
             returnState.filterCheckboxObjects[action.filterLabel][action.checkboxLabel].checked = action.checked;
@@ -166,7 +171,7 @@ export function filterReducer(state: FilterState, action: FilterAction) {
         case 'update slider': {
             // Will need to update: timestamps, internalFilterObject, postIdArrays, internalFilteredPosts
             // Update timestamp for memo comparisons
-            returnState.timestamps[action.filterLabel] = new Date().toUTCString();
+            returnState.timestamps[action.filterLabel] = currentTimestamp;
             // Update filterObjects to update inputs (checkboxes, sliders, etc)
             returnState.filterSliderObjects[action.filterLabel] = { ...returnState.filterSliderObjects[action.filterLabel], min: action.min, max: action.max, disabled: false }
             // Update postIdArray
@@ -179,7 +184,8 @@ export function filterReducer(state: FilterState, action: FilterAction) {
         case 'disable slider': {
             // Will need to update: timestamps, internalFilterObject, postIdArrays, internalFilteredPosts
             // Update timestamp for memo comparisons
-            returnState.timestamps[action.filterLabel] = new Date().toUTCString();
+            returnState.timestamps[action.filterLabel] = currentTimestamp;
+            returnState.timestamps.internalFilteredPosts = currentTimestamp;
             // Update filterObjects to update inputs (checkboxes, sliders, etc)
             returnState.filterSliderObjects[action.filterLabel] = { ...returnState.filterSliderObjects[action.filterLabel], disabled: true }
             // Update postIdArray
@@ -191,7 +197,7 @@ export function filterReducer(state: FilterState, action: FilterAction) {
             break;
         }
         case "update external": {
-            returnState.timestamps.externalFilteredPosts = new Date().toUTCString();
+            returnState.timestamps.externalFilteredPosts = currentTimestamp;
             returnState.externalFilteredPosts = returnState.internalFilteredPosts;
             break;
         }
