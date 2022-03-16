@@ -3,21 +3,20 @@ import React, { PropsWithChildren, useContext } from 'react';
 import { SearchContext } from '../Context/SearchContext';
 import { TimestampsObject } from '../Reducers/filterReducer';
 import { PostObject } from '../utils/dataObjects';
-import { logAdminExternal } from '../utils/logging';
 import ResultCard from './ResultCard';
 
 function BaseSearchResults({
-  filteredPosts,
+  externalFilteredPosts,
   internalFilteredPosts,
   timestamps,
 }: {
-  filteredPosts: PostObject[];
+  externalFilteredPosts: PostObject[];
   internalFilteredPosts: PostObject[];
   timestamps: TimestampsObject;
 }) {
   return (
     <Box>
-      {filteredPosts.map((thisResult) => (
+      {externalFilteredPosts.map((thisResult) => (
         <ResultCard key={thisResult.postId} postObject={thisResult} />
       ))}
     </Box>
@@ -28,14 +27,14 @@ function BaseSearchResults({
 function comparisonFunction(
   prevProps: Readonly<
     PropsWithChildren<{
-      filteredPosts: PostObject[];
+      externalFilteredPosts: PostObject[];
       internalFilteredPosts: PostObject[];
       timestamps: TimestampsObject;
     }>
   >,
   nextProps: Readonly<
     PropsWithChildren<{
-      filteredPosts: PostObject[];
+      externalFilteredPosts: PostObject[];
       internalFilteredPosts: PostObject[];
       timestamps: TimestampsObject;
     }>
@@ -43,13 +42,14 @@ function comparisonFunction(
 ) {
   // We only want to re-render if the external posts object is different from the previous posts object. This will only happen when the timestamp for the external posts update was the last to be clicked. So we'll return true whenever the external posts update isn't the most recent timestamp.
   // First check if timestamps suggest an internal update (ie, no re-render necessary)
-  if (prevProps.timestamps.externalFilteredPosts === nextProps.timestamps.externalFilteredPosts)
+  if (nextProps.timestamps.externalFilteredPosts < nextProps.timestamps.internalFilteredPosts)
     return true;
   // Second, check if the externalFilteredPosts are different. If they are the same, return true. Else return false.
   // Check if array lengths have changed length and if postId props are all the same. If true then don't render change`
-  const arrayIdsAreSame = prevProps.filteredPosts.length === nextProps.filteredPosts.length &&
-    prevProps.filteredPosts.filter(
-      (thisPrevObj, index) => thisPrevObj.postId !== nextProps.filteredPosts[index].postId
+  const arrayIdsAreSame =
+    prevProps.externalFilteredPosts.length === nextProps.externalFilteredPosts.length &&
+    prevProps.externalFilteredPosts.filter(
+      (thisPrevObj, index) => thisPrevObj.postId !== nextProps.externalFilteredPosts[index].postId
     ).length === 0;
   return arrayIdsAreSame;
 }
@@ -58,9 +58,10 @@ const MemoisedSearchResults = React.memo(BaseSearchResults, comparisonFunction);
 
 function SearchResults() {
   const { filterState } = useContext(SearchContext);
+
   return (
     <MemoisedSearchResults
-      filteredPosts={filterState.externalFilteredPosts}
+      externalFilteredPosts={filterState.externalFilteredPosts}
       internalFilteredPosts={filterState.internalFilteredPosts}
       timestamps={filterState.timestamps}
     />
