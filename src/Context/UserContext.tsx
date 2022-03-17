@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
+import { Seasons } from '../utils/dataObjects';
 
-interface UserMeasurements {
+export interface UserMeasurements {
   height: number;
   chest: number;
   waist: number;
 }
 
-interface UserDetails {
+export interface UserDetails {
   username: string;
-  season: string;
+  season: Seasons;
   measurements: UserMeasurements;
 }
 
@@ -19,7 +20,7 @@ interface UserContextInterface {
 export const UserContext = React.createContext<UserContextInterface>({} as UserContextInterface);
 
 export default function UserContextProvider(props: { children: React.ReactNode }) {
-  const [userDetails, setUserDetails] = useState({
+  const [userDetails, setUserDetails] = useState<UserDetails>({
     username: 'temporaryUser',
     season: 'winter',
     measurements: {

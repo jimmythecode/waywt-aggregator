@@ -59,7 +59,7 @@ function UpdateResultsButton() {
 
   return (
     <Button
-      sx={{ position: 'fixed', zIndex: 1000 }}
+      sx={{ position: 'fixed', zIndex: 900 }}
       color={resultsUpToDate ? 'success' : 'secondary'}
       disabled={resultsUpToDate}
       onClick={updateResults}

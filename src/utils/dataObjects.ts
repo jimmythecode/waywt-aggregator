@@ -1,12 +1,14 @@
-/* eslint-disable import/prefer-default-export */
-type Seasons = "autumn" | "winter" | "spring" | "summer";
+import { UserMeasurements } from '../Context/UserContext';
 
-export interface PostObject {
+/* eslint-disable import/prefer-default-export */
+export type Seasons = "autumn" | "winter" | "spring" | "summer";
+
+export interface PostObject extends UserMeasurements {
     postId: number,
     username: string,
-    height: number,
-    chest: number,
-    waist: number,
+    // height: number,
+    // chest: number,
+    // waist: number,
     season: Seasons,
     images: string[],
     postUrl: string,

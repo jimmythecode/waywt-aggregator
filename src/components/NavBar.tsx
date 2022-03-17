@@ -74,6 +74,11 @@ export default function NavBar() {
     addLog('Clicked NavBar AccountCircle Menu Button')
   };
 
+  const handleLeftMenuOpen = (event: { currentTarget: Element }) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+    addLog('Clicked NavBar Menu Button')
+  };
+
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -99,9 +104,8 @@ export default function NavBar() {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-      sx={{zIndex: 3000}}
+      sx={{zIndex: 1320}}
     >
-      {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
       <MenuItem onClick={handleMenuClose}>
         <Link
           style={{ color: 'inherit', cursor: 'inherit', textDecoration: 'inherit' }}
@@ -131,23 +135,19 @@ export default function NavBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size='large'
-          aria-label='account of current user'
-          aria-controls='primary-search-account-menu'
-          aria-haspopup='true'
-          color='inherit'
+        <Link
+          style={{ color: 'inherit', cursor: 'inherit', textDecoration: 'inherit' }}
+          to='/'
         >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
+          Coming Soon
+        </Link>
       </MenuItem>
     </Menu>
   );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='fixed' sx={{ zIndex: 2000 }}>
+      <AppBar position='fixed' sx={{ zIndex: 1250 }}>
         <Toolbar>
           <IconButton
             size='large'
@@ -155,13 +155,13 @@ export default function NavBar() {
             color='inherit'
             aria-label='open drawer'
             sx={{ mr: 2 }}
-            onClick={() => addLog('Clicked NavBar Menu Button')}
+            onClick={handleLeftMenuOpen}
           >
             <MenuIcon />
           </IconButton>
           <MiddleButtons />
 
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
             <IconButton
               size='large'
               edge='end'

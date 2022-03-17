@@ -23,6 +23,7 @@ import { ReactComponent as ScalesSVG } from '../icons/scales.svg';
 import { PostObject } from '../utils/dataObjects';
 import { UserContext } from '../Context/UserContext';
 import { LoggingContext } from '../Context/LoggingContext';
+import UserInfoDialog from './UserInfoDialog';
 
 function VoteSidePanel() {
   const { addLog } = useContext(LoggingContext);
@@ -275,7 +276,7 @@ const seasonSVGObject = {
   summer: <WbSunnyIcon fill='currentColor' />,
 };
 
-function SeasonIcon({ season }: { season: keyof typeof seasonCssColor }) {
+export function SeasonIcon({ season }: { season: keyof typeof seasonCssColor }) {
   return (
     <Box
       sx={{
@@ -293,12 +294,14 @@ function SeasonIcon({ season }: { season: keyof typeof seasonCssColor }) {
   );
 }
 
-function DifferenceWithArrowOrScales({
+export function DifferenceWithArrowOrScales({
   userMeasure,
   posterMeasure,
+  showDifference = false,
 }: {
   userMeasure: number;
   posterMeasure: number;
+  showDifference: boolean;
 }) {
   function getColorBasedOnDifference(difference: number): string {
     if (Math.abs(difference) <= 1) return 'green';
@@ -308,10 +311,47 @@ function DifferenceWithArrowOrScales({
 
   const difference = posterMeasure - userMeasure;
   // If measures are equal, we want green scales and 0cm
+
+  const elementObject = {
+    equal: {
+      span: <span>{showDifference ? difference : posterMeasure}cm</span>,
+      icon: (
+        <ScalesSVG
+          height='24px'
+          width='24px'
+          fill='currentColor'
+          title="user measures and poster's measures are the same"
+        />
+      ),
+    },
+    greater: {
+      span: <span>{showDifference ? difference : posterMeasure}cm</span>,
+      icon: (
+        <ArrowDownwardIcon
+          height='24px'
+          fill='currentColor'
+          titleAccess="poster's measures are smaller than your measures"
+        />
+      ),
+    },
+    less: {
+      span: <span>{showDifference ? difference : posterMeasure}cm</span>,
+      icon: (
+        <ArrowUpwardIcon
+          height='24px'
+          fill='currentColor'
+          titleAccess="poster's measures are greater than your measures"
+        />
+      ),
+    },
+  };
+
   if (difference === 0) {
     return (
       <>
-        <span>{difference}cm</span>
+        {/* <span>{JSON.stringify({ difference, posterMeasure, userMeasure, showDifference })}cm</span> */}
+        {elementObject.equal.span}
+        {/* <span>{showDifference ? difference : posterMeasure}cm</span> */}
         <Box
           sx={{
             display: 'flex',
@@ -320,12 +360,13 @@ function DifferenceWithArrowOrScales({
             padding: '4px',
           }}
         >
-          <ScalesSVG
+          {elementObject.equal.icon}
+          {/* <ScalesSVG
             height='24px'
             width='24px'
             fill='currentColor'
             title="user measures and poster's measures are the same"
-          />
+          /> */}
         </Box>
       </>
     );
@@ -334,7 +375,8 @@ function DifferenceWithArrowOrScales({
   if (difference > 0) {
     return (
       <>
-        <span>{difference}cm</span>
+        {/* <span>{posterMeasure}cm</span> */}
+        {elementObject.greater.span}{' '}
         <Box
           sx={{
             display: 'flex',
@@ -343,18 +385,21 @@ function DifferenceWithArrowOrScales({
             padding: '4px',
           }}
         >
-          <ArrowUpwardIcon
+          {elementObject.greater.icon}
+          {/* <ArrowUpwardIcon
             height='24px'
             fill='currentColor'
             titleAccess="poster's measures are greater than your measures"
-          />
+          /> */}
         </Box>
       </>
     );
   }
   return (
     <>
-      <span>{difference}cm</span>
+      {/* <span>{posterMeasure}cm</span> */}
+      {/* <span>{JSON.stringify({ difference, posterMeasure, userMeasure, showDifference })}cm</span> */}
+      {elementObject.greater.span}
       <Box
         sx={{
           display: 'flex',
@@ -363,18 +408,29 @@ function DifferenceWithArrowOrScales({
           padding: '4px',
         }}
       >
-        <ArrowDownwardIcon
+        {elementObject.greater.icon}
+
+        {/* <ArrowDownwardIcon
           height='24px'
           fill='currentColor'
           titleAccess="poster's measures are smaller than your measures"
-        />
+        /> */}
       </Box>
     </>
   );
 }
 
-function UserInfo({ postObject }: { postObject: PostObject }) {
+function UserInfo({
+  postObject,
+  modalOpen,
+  setModalOpen,
+}: {
+  postObject: PostObject;
+  modalOpen: boolean;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   // Panel with Height, Chest, Waist measures and Season
+  // const [infoModalOpen, setInfoModalOpen] = React.useState(false);
   const { userDetails } = React.useContext(UserContext);
   const { addLog } = useContext(LoggingContext);
   return (
@@ -389,8 +445,12 @@ function UserInfo({ postObject }: { postObject: PostObject }) {
         borderRadius: '8px',
         borderColor: grey[400],
         position: 'relative',
+        cursor: 'pointer',
       }}
-      onClick={() => addLog('clicked userInfo panel')}
+      onClick={() => {
+        addLog('clicked userInfo panel');
+        setModalOpen(true);
+      }}
     >
       <span
         style={{
@@ -437,6 +497,7 @@ function UserInfo({ postObject }: { postObject: PostObject }) {
             <DifferenceWithArrowOrScales
               userMeasure={userDetails.measurements.height}
               posterMeasure={postObject.height}
+              showDifference={false}
             />
           </Box>
           {/* Chest */}
@@ -445,6 +506,7 @@ function UserInfo({ postObject }: { postObject: PostObject }) {
             <DifferenceWithArrowOrScales
               userMeasure={userDetails.measurements.chest}
               posterMeasure={postObject.chest}
+              showDifference={false}
             />
           </Box>
           {/* Waist */}
@@ -453,6 +515,7 @@ function UserInfo({ postObject }: { postObject: PostObject }) {
             <DifferenceWithArrowOrScales
               userMeasure={userDetails.measurements.waist}
               posterMeasure={postObject.waist}
+              showDifference={false}
             />
           </Box>
           <Box // Season Icon
@@ -466,7 +529,15 @@ function UserInfo({ postObject }: { postObject: PostObject }) {
   );
 }
 
-function InfoSection({ postObject }: { postObject: PostObject }) {
+function InfoSection({
+  postObject,
+  modalOpen,
+  setModalOpen,
+}: {
+  postObject: PostObject;
+  modalOpen: boolean;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
     <CardContent
       sx={{
@@ -478,7 +549,8 @@ function InfoSection({ postObject }: { postObject: PostObject }) {
       <br />
       <StyleChips postObject={postObject} />
       <br />
-      <UserInfo postObject={postObject} />
+      <UserInfo postObject={postObject} modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      {/* <TestModal postObject={postObject} open={modalOpen} setOpen={setModalOpen} /> */}
     </CardContent>
   );
 }
@@ -486,9 +558,11 @@ function InfoSection({ postObject }: { postObject: PostObject }) {
 function ResultCard({ postObject }: { postObject: PostObject }) {
   const imageUrl = postObject.images[0];
   const imageUrlExtention = imageUrl.split('.').pop() === 'jpg' ? imageUrl : `${imageUrl}.jpg`;
-
+  const [modalOpen, setModalOpen] = React.useState(false);
   return (
     <Box sx={{ minWidth: 275, marginBottom: 1.5 }}>
+       {/* <TestModal postObject={postObject} open={modalOpen} setOpen={setModalOpen} /> */}
+         <UserInfoDialog postObject={postObject} open={modalOpen} setOpen={setModalOpen} />
       <Card
         variant='outlined'
         sx={{
@@ -507,7 +581,7 @@ function ResultCard({ postObject }: { postObject: PostObject }) {
           sx={{ display: 'grid', gridTemplateColumns: '1fr 19fr' }}
         >
           <VoteSidePanel />
-          <InfoSection postObject={postObject} />
+          <InfoSection postObject={postObject} modalOpen={modalOpen} setModalOpen={setModalOpen} />
         </Box>
         <Box // Post Images
           sx={{
@@ -521,9 +595,9 @@ function ResultCard({ postObject }: { postObject: PostObject }) {
             gridRow: {
               xs: 1,
             },
-            display: "flex",
-            justifyContent: "center",
-            alignItems:"center"
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
             // gridColumnStart: 1,
           }}
           component='a'
