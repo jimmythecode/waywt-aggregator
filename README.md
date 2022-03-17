@@ -1,48 +1,34 @@
-# Getting Started with Create React App
+# WAYWT Aggregator
 
-https://waywt.netlify.app/
+WAYWT ("What Are You Wearing Today") Aggregator is a tool to enable users to filter through previous posts on r/malefashionadvice's WAYWT threads. [Hosted Demo](https://waywt.netlify.app/)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
+  <img src="https://i.imgur.com/4layLOg.gif"  />
+    <img src="https://i.imgur.com/OHvNSDF.gif"  />
+</p>
+<figcaption align = "center"><b>The left gif demonstrates how the results can be viewed for simple information, such as the dress styles of the post. The username and location of the poster is viewable, and clicking the image will take the user to the original post on Reddit.  The right gif demonstrates the filter in action. Currently the user can filter by styles, username, measurements, and seasonal color.</b></figcaption>
+<br/><br/>
 
-## Available Scripts
+Each Reddit post will contain an image of the post author wearing whatever attire they chose for the day. The other Redditors can then provide feedback, and other Reddit browsers (lurkers) can use the post for inspiration for their own attire.
+<br/>
 
-In the project directory, you can run:
+<p float="middle" align="center">
+  <img src="https://i.imgur.com/39Rwuya.png" width="49%" />
+  <img src="https://i.imgur.com/136Erhj.jpg" width="49%" /> 
+</p>
+<figcaption align = "center"><b>A typical WAYWT thread (left) and an example of the kind of image associated with the post (right)</b></figcaption>
 
-### `yarn start`
+# The Code
+The front-end was built using Create-React-App, using typescript. The majority of the components are from the Material UI library.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The [back-end API](https://github.com/jimmythecode/waywt-backend) is built on ASP.NET, using C#. Currently, the API is only used for creating a user session and recording user interactions with the demo. 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Code Features
+### Testing
+Only the filterReducer is currently tested. TDD was carried out using Jest.
+### Memoisation and Performance
+To improve the speed of the app, the `SearchResults` component was wrapped in `React.memo()`. The comparison function checks that the filter options are changed/unchanged compared to the current results on display and will only re-render if there has been a change.
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+The `filterState` is created in `SearchContext.tsx`. It is a complex, nested object which provides memoisation of results for each of the filters. This was me trying to save memory compared to recalculating all the filters on each change.
+### Logging/Analytics
+I've used a custom `useInterval` hook to provide a dynamic interval for sending recorded user interactions to the ASP.NET API (see `LoggingContext.tsx` for more info). The `LoggingContext` records such interactions as clicking filters, menus, etc.
