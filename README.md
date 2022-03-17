@@ -7,8 +7,10 @@ WAYWT ("What Are You Wearing Today") Aggregator is a tool to enable users to fil
     <img src="https://i.imgur.com/OHvNSDF.gif"  />
 </p>
 <figcaption align = "center"><b>The left gif demonstrates how the results can be viewed for simple information, such as the dress styles of the post. The username and location of the poster is viewable, and clicking the image will take the user to the original post on Reddit.  The right gif demonstrates the filter in action. Currently the user can filter by styles, username, measurements, and seasonal color.</b></figcaption>
+<br/><br/>
 
 Each Reddit post will contain an image of the post author wearing whatever attire they chose for the day. The other Redditors can then provide feedback, and other Reddit browsers (lurkers) can use the post for inspiration for their own attire.
+<br/>
 
 <p float="middle" align="center">
   <img src="https://i.imgur.com/39Rwuya.png" width="49%" />
