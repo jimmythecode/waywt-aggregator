@@ -101,7 +101,10 @@ export default function UserInfoDialog({
                 {['height', 'chest', 'waist'].map((thisLabel1) => {
                   const thisLabel = thisLabel1 as keyof UserMeasurements;
                   return (
-                    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                    <TableRow
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      key={thisLabel}
+                    >
                       <TableCell
                         component='th'
                         scope='row'
