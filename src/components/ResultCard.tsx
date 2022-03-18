@@ -23,7 +23,7 @@ import { ReactComponent as ScalesSVG } from '../icons/scales.svg';
 import { PostObject } from '../utils/dataObjects';
 import { UserContext } from '../Context/UserContext';
 import { LoggingContext } from '../Context/LoggingContext';
-import UserInfoDialog from './UserInfoDialog';
+import UserInfoScrollDialog from './UserInfoScrollingDialog';
 
 function VoteSidePanel() {
   const { addLog } = useContext(LoggingContext);
@@ -550,7 +550,6 @@ function InfoSection({
       <StyleChips postObject={postObject} />
       <br />
       <UserInfo postObject={postObject} modalOpen={modalOpen} setModalOpen={setModalOpen} />
-      {/* <TestModal postObject={postObject} open={modalOpen} setOpen={setModalOpen} /> */}
     </CardContent>
   );
 }
@@ -561,8 +560,7 @@ function ResultCard({ postObject }: { postObject: PostObject }) {
   const [modalOpen, setModalOpen] = React.useState(false);
   return (
     <Box sx={{ minWidth: 275, marginBottom: 1.5 }}>
-       {/* <TestModal postObject={postObject} open={modalOpen} setOpen={setModalOpen} /> */}
-         <UserInfoDialog postObject={postObject} open={modalOpen} setOpen={setModalOpen} />
+         <UserInfoScrollDialog postObject={postObject} open={modalOpen} setOpen={setModalOpen} />
       <Card
         variant='outlined'
         sx={{
