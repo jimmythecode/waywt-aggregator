@@ -10,7 +10,7 @@ function PostImages({ postObject }: { postObject: PostObject }) {
   const [imageIndex, setImageIndex] = useState(0);
 
   return (
-    <Box // Post Images
+    <Box // anchor element
       sx={{
         position: 'relative',
         backgroundColor: '#3c424b',
@@ -31,7 +31,7 @@ function PostImages({ postObject }: { postObject: PostObject }) {
       target='_blank'
       rel='noreferrer'
     >
-      <Box
+      <Box // img element
         component='img'
         sx={{
           height: {

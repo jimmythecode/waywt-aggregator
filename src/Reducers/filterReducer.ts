@@ -1,3 +1,9 @@
+import {
+  getInitialColorSeasonsFilterObject,
+  getInitialStyleFilterObject,
+  getInitialUsersFilterObject,
+  reducedUniqueStyles,
+} from '../Context/searchContextFunctions';
 import { PostObject } from '../utils/dataObjects';
 import { logAdminExternal } from '../utils/logging';
 
@@ -195,9 +201,22 @@ export function filterReducer(state: FilterState, action: FilterAction) {
       returnState.initialArrayOfPosts = action.newArray;
       returnState.internalFilteredPosts = action.newArray;
       returnState.externalFilteredPosts = action.newArray;
+      // Need to update filters
+      returnState.filterCheckboxObjects.colorSeasons = getInitialColorSeasonsFilterObject(
+        action.newArray
+      );
+      returnState.filterCheckboxObjects.styles = getInitialStyleFilterObject(
+        reducedUniqueStyles(action.newArray)
+      );
+      returnState.filterCheckboxObjects.users = getInitialUsersFilterObject(action.newArray);
+      // update timestamps
       returnState.timestamps.initialFilteredPosts = currentTimestamp;
       returnState.timestamps.internalFilteredPosts = currentTimestamp;
       returnState.timestamps.externalFilteredPosts = currentTimestamp;
+      returnState.timestamps.colorSeasons = currentTimestamp;
+      returnState.timestamps.styles = currentTimestamp;
+      returnState.timestamps.users = currentTimestamp;
+
       break;
     }
     case 'click select all checkbox': {

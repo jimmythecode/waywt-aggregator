@@ -27,6 +27,7 @@ import { UserContext } from '../Context/UserContext';
 import UserInfoScrollDialog from './UserInfoScrollingDialog';
 import PostImages from './PostImages';
 import { LoggingContext } from '../Context/LoggingContext/LoggingContext';
+import { getDaysAgo } from '../utils/timeFunctions';
 
 function VoteSidePanel() {
   const location = useLocation();
@@ -73,10 +74,11 @@ function VoteSidePanel() {
 function HeaderInfo({ postObject }: { postObject: PostObject }) {
   const location = useLocation();
   const { addLog } = useContext(LoggingContext);
+  const postedDaysAgo = getDaysAgo(postObject.created * 1000);
   const countryCode =
     typeof postObject?.country === 'string' && postObject.country.length > 0
       ? postObject.country.toLowerCase()
-      : 'us';
+      : 'unknown';
   return (
     <Box
       sx={{
@@ -100,20 +102,21 @@ function HeaderInfo({ postObject }: { postObject: PostObject }) {
           u/{postObject.author}
         </a>
       </span>
-      <span> 2 days ago</span>
-
-      <Box
-        component='img'
-        src={`https://flagcdn.com/20x15/${countryCode.toLowerCase()}.png`}
-        width='20'
-        height='15'
-        sx={{
-          width: '20px',
-          height: '15px',
-          marginLeft: '8px',
-          verticalAligh: 'middle',
-        }}
-      />
+      <span> {postedDaysAgo > 0 ? `${postedDaysAgo} days ago` : 'posted today'}</span>
+      {countryCode !== 'unknown' && (
+        <Box
+          component='img'
+          src={`https://flagcdn.com/20x15/${countryCode.toLowerCase()}.png`}
+          width='20'
+          height='15'
+          sx={{
+            width: '20px',
+            height: '15px',
+            marginLeft: '8px',
+            verticalAligh: 'middle',
+          }}
+        />
+      )}
     </Box>
   );
 }
@@ -251,17 +254,10 @@ function StyleChips({ postObject }: { postObject: PostObject }) {
         {arrayOfChips.length === 0 && (
           <Chip
             label='(No style tags have been provided)'
-            // variant='outlined'
             variant='outlined'
             color='primary'
             disabled
             size='small'
-            // avatar={<Avatar>#</Avatar>}
-            sx={
-              {
-                // visibility: 'hidden',
-              }
-            }
           />
         )}
       </Box>
@@ -437,7 +433,6 @@ function UserInfo({
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   // Panel with Height, Chest, Waist measures and Season
-  // const [infoModalOpen, setInfoModalOpen] = React.useState(false);
   const location = useLocation();
   const { addLog } = useContext(LoggingContext);
   const { userDetails } = React.useContext(UserContext);
@@ -500,32 +495,49 @@ function UserInfo({
           }}
         >
           {/* Height */}
-          <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '16px' }}>
-            <img src={HeightSVG} alt='height' style={{ height: '32px' }} />
-            <DifferenceWithArrowOrScales
-              userMeasure={userDetails.measurements.height}
-              posterMeasure={postObject.height}
-              showDifference={false}
-            />
-          </Box>
+          {postObject.height && userDetails.measurements.height && (
+            <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '16px' }}>
+              <img src={HeightSVG} alt='height' style={{ height: '32px' }} />
+              <DifferenceWithArrowOrScales
+                userMeasure={userDetails.measurements.height}
+                posterMeasure={postObject.height}
+                showDifference={false}
+              />
+            </Box>
+          )}
           {/* Chest */}
-          <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '16px' }}>
-            <img src={chestSVG} alt='chest' style={{ height: '32px' }} />
-            <DifferenceWithArrowOrScales
-              userMeasure={userDetails.measurements.chest}
-              posterMeasure={postObject.chest}
-              showDifference={false}
-            />
-          </Box>
+          {postObject.chest && userDetails.measurements.chest && (
+            <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '16px' }}>
+              <img src={chestSVG} alt='chest' style={{ height: '32px' }} />
+              <DifferenceWithArrowOrScales
+                userMeasure={userDetails.measurements.chest}
+                posterMeasure={postObject.chest}
+                showDifference={false}
+              />
+            </Box>
+          )}
+
           {/* Waist */}
-          <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '16px' }}>
-            <img src={beltSVG} alt='belt' style={{ height: '32px' }} />
-            <DifferenceWithArrowOrScales
-              userMeasure={userDetails.measurements.waist}
-              posterMeasure={postObject.waist}
-              showDifference={false}
+          {postObject.waist && userDetails.measurements.waist && (
+            <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '16px' }}>
+              <img src={beltSVG} alt='belt' style={{ height: '32px' }} />
+              <DifferenceWithArrowOrScales
+                userMeasure={userDetails.measurements.waist}
+                posterMeasure={postObject.waist}
+                showDifference={false}
+              />
+            </Box>
+          )}
+          {!postObject.waist && !postObject.chest && !postObject.height && (
+            <Chip
+              label='(No user info has been provided)'
+              variant='outlined'
+              color='primary'
+              disabled
+              size='small'
+              sx={{ marginRight: 'auto' }}
             />
-          </Box>
+          )}
           <Box // Season Icon
             onMouseEnter={() => addLog('onMouseEnter over SeasonIcon', location.pathname)}
           >
