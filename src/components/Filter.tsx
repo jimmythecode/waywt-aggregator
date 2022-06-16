@@ -1,10 +1,5 @@
 import React, { SyntheticEvent, useContext, useState } from 'react';
-import {
-  Box,
-  Button,
-  Collapse,
-  Toolbar,
-} from '@mui/material';
+import { Box, Button, Collapse, Toolbar } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useLocation } from 'react-router-dom';
 import { SearchContext } from '../Context/SearchContext';
@@ -115,11 +110,14 @@ function Filter({ origin }: { origin: string }) {
         Styles
       </Button>
       <Collapse in={dropDownOpen.styles}>
-        <FilterCheckboxes
+        <Box sx={{ textAlign: 'center', color: "gray" }}>
+          <span>(This feature isn&apos;t ready yet)</span>
+        </Box>
+        {/* <FilterCheckboxes
           filterLabel='styles'
           filterObject={filterState.filterCheckboxObjects.styles}
           dispatchFilter={dispatchFilter}
-        />
+        /> */}
       </Collapse>
       <Button // User Checkboxes
         sx={{ width: '100%' }}
@@ -135,7 +133,7 @@ function Filter({ origin }: { origin: string }) {
           dispatchFilter={dispatchFilter}
         />
       </Collapse>
-      <Button // Color Season Checkboxes
+      {/* <Button // Color Season Checkboxes
         sx={{ width: '100%' }}
         endIcon={<ArrowDropDownIcon />}
         onClick={() => clickDropdownButton('colorSeasons')}
@@ -175,7 +173,7 @@ function Filter({ origin }: { origin: string }) {
           dispatchFilter={dispatchFilter}
           dropdownOpen={dropDownOpen.sliders}
         />
-      </Collapse>
+      </Collapse> */}
     </Box>
   );
 }
