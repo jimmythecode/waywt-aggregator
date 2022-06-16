@@ -61,15 +61,6 @@ export default function SearchContextProvider(props: { children: React.ReactNode
   // On Page load, fetch posts from back end.
   useEffect(() => {
     // Only fetch if there are no posts, or we haven't fetched in the last 10 mins.
-    console.log({
-      length: fetchedPosts.length === 0,
-      timestamps: timestamps.fetchPosts === null,
-      getSecondsDifference:
-        timestamps.fetchPosts === null
-          ? "cn't perform"
-          : getSecondsDifference(timestamps.fetchPosts, new Date().toUTCString()) / 60 / 10 > 10,
-    });
-
     if (
       fetchedPosts.length === 0 ||
       timestamps.fetchPosts === null ||

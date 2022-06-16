@@ -7,14 +7,9 @@ import ResultCard from './ResultCard';
 
 function BaseSearchResults({
   externalFilteredPosts,
-  internalFilteredPosts,
-  timestamps,
 }: {
   externalFilteredPosts: PostObject[];
-  internalFilteredPosts: PostObject[];
-  timestamps: TimestampsObject;
 }) {
-  console.log({ externalFilteredPosts: externalFilteredPosts.map((x) => x.imageUrls) });
 
   return (
     <Box>

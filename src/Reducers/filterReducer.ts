@@ -155,8 +155,6 @@ export function getInitialReducerState({
   initialColorSeasonsFilterObject: FilterObjectCheckbox;
   initialPostsArrayIds: string[];
 }): FilterState {
-  console.log({ location: 'getInitialReducerState()' });
-
   return {
     ...emptyFilterState,
     initialArrayOfPosts: fetchedPosts,
@@ -192,8 +190,6 @@ export function getInitialReducerState({
 export function filterReducer(state: FilterState, action: FilterAction) {
   const returnState = { ...state };
   const currentTimestamp = new Date().toISOString();
-  console.log({ location: 'filterReducer', actionType: action.type });
-
   switch (action.type) {
     case 'update from fetch request': {
       returnState.initialArrayOfPosts = action.newArray;
