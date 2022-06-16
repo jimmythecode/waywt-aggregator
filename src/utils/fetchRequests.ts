@@ -1,12 +1,12 @@
 import { logAdminExternal } from './logging';
 
 let domainUrl = process.env.REACT_APP_BACKEND_URL_LOCAL;
-if (process.env.REACT_APP_NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   domainUrl = process.env.REACT_APP_BACKEND_URL_HOSTED;
 }
 
 let loggingServerUrl = process.env.REACT_APP_BACKEND_URL_LOCAL;
-if (process.env.REACT_APP_NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   loggingServerUrl = process.env.REACT_APP_LOGGING_URL;
 }
 
