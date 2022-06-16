@@ -19,6 +19,8 @@ function getRequestHeaders() {
 export function fetchGetBackEnd(url: string) {
   console.log('firing fetch to: ', `${domainUrl}${url}`);
   console.log({ domainUrl, url });
+  console.log(process.env);
+  
 
   return fetch(`${domainUrl}${url}`, {
     method: 'GET',
