@@ -8,15 +8,16 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { GlobalContext } from '../Context/GlobalContext';
-import { LoggingContext } from '../Context/LoggingContext';
+import { LoggingContext } from '../Context/LoggingContext/LoggingContext';
 
 function MiddleButtons() {
-  const { filterMobileOpen, setFilterMobileOpen } = React.useContext(GlobalContext);
-  const { addLog } = useContext(LoggingContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { addLog } = useContext(LoggingContext);
+  const { filterMobileOpen, setFilterMobileOpen } = React.useContext(GlobalContext);
   return (
     <Box sx={{ flexGrow: 1, display: 'flex' }}>
       <Button
@@ -30,7 +31,7 @@ function MiddleButtons() {
         }}
         onClick={() => {
           navigate(`/`);
-          addLog('Clicked NavBar Logo');
+          addLog('Clicked NavBar Logo', location.pathname);
         }}
       >
         WAYWT Aggregator
@@ -51,7 +52,7 @@ function MiddleButtons() {
         color='secondary'
         variant='contained'
         onClick={() => {
-          addLog('Clicked NavBar Open Filter Button');
+          addLog('Clicked NavBar Open Filter Button', location.pathname);
           setFilterMobileOpen((prev) => !prev);
         }}
       >
@@ -62,6 +63,7 @@ function MiddleButtons() {
 }
 
 export default function NavBar() {
+  const location = useLocation();
   const { addLog } = useContext(LoggingContext);
   const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<Element | null>(null);
@@ -71,12 +73,12 @@ export default function NavBar() {
 
   const handleProfileMenuOpen = (event: { currentTarget: Element }) => {
     setAnchorEl(event.currentTarget);
-    addLog('Clicked NavBar AccountCircle Menu Button')
+    addLog('Clicked NavBar AccountCircle Menu Button', location.pathname)
   };
 
   const handleLeftMenuOpen = (event: { currentTarget: Element }) => {
     setMobileMoreAnchorEl(event.currentTarget);
-    addLog('Clicked NavBar Menu Button')
+    addLog('Clicked NavBar Menu Button', location.pathname)
   };
 
   const handleMobileMenuClose = () => {

@@ -8,7 +8,8 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useContext, useEffect } from 'react';
-import { LoggingContext } from '../Context/LoggingContext';
+import { useLocation } from 'react-router-dom';
+import { LoggingContext } from '../Context/LoggingContext/LoggingContext';
 import { UserContext } from '../Context/UserContext';
 import { FilterAction, FilterObjectSlider } from '../Reducers/filterReducer';
 
@@ -29,6 +30,7 @@ function SizeSlider({
   dispatchFilter: React.Dispatch<FilterAction>;
   dropdownOpen: boolean;
 }) {
+  const location = useLocation();
   const { userDetails } = useContext(UserContext);
   const { addLog } = useContext(LoggingContext);
   const [value, setValue] = React.useState<number[]>([filterObject.min, filterObject.max]);
@@ -79,20 +81,20 @@ function SizeSlider({
   // Debounce disable/enable slider from local state
   React.useEffect(() => {
     function updateWhenCheckboxClicked() {
-                    if (!disabledState) {
-                      // If we enable slider (disabledState=false), then update slider: 
-                      dispatchFilter({
-                        type: 'update slider',
-                        filterLabel,
-                        min: value[0],
-                        max: value[1],
-                      });
-                    } else {
-                      dispatchFilter({
-                        type: 'disable slider',
-                        filterLabel,
-                      });
-                    }
+      if (!disabledState) {
+        // If we enable slider (disabledState=false), then update slider:
+        dispatchFilter({
+          type: 'update slider',
+          filterLabel,
+          min: value[0],
+          max: value[1],
+        });
+      } else {
+        dispatchFilter({
+          type: 'disable slider',
+          filterLabel,
+        });
+      }
     }
     const delayDebounceFn = setTimeout(() => {
       updateWhenCheckboxClicked();
@@ -119,10 +121,13 @@ function SizeSlider({
                 <Switch
                   checked={!disabledState}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    addLog(`Clicked enable/disable button for ${filterLabel} slider`);
+                    addLog(
+                      `Clicked enable/disable button for ${filterLabel} slider`,
+                      location.pathname
+                    );
                     setDisabledState(!event.target.checked);
                     // if (event.target.checked) {
-                    //   // If we enable slider, then update slider: 
+                    //   // If we enable slider, then update slider:
                     //   dispatchFilter({
                     //     type: 'update slider',
                     //     filterLabel,

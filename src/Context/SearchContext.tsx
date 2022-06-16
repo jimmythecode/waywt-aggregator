@@ -1,9 +1,8 @@
 import { useSnackbar } from 'notistack';
 import React, { useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
-  emptyFilterState,
   FilterAction,
-  FilterObjectCheckbox,
   filterReducer,
   FilterState,
   getInitialReducerState,
@@ -16,7 +15,7 @@ import {
 } from '../utils/localStorageActions';
 import { getSecondsDifference } from '../utils/timeFunctions';
 import { GlobalContext } from './GlobalContext';
-import { LoggingContext } from './LoggingContext';
+import { LoggingContext } from './LoggingContext/LoggingContext';
 import {
   getInitialColorSeasonsFilterObject,
   getInitialPostsArrayIds,
@@ -57,6 +56,7 @@ export default function SearchContextProvider(props: { children: React.ReactNode
     getInitialReducerState
   );
   const { filterMobileOpen, setFilterMobileOpen } = React.useContext(GlobalContext);
+  const location = useLocation();
 
   // On Page load, fetch posts from back end.
   useEffect(() => {
@@ -100,7 +100,7 @@ export default function SearchContextProvider(props: { children: React.ReactNode
   }, []);
 
   function updateResults(): void {
-    addLog('Clicked Update Results Button');
+    addLog('Clicked Update Results Button', location.pathname);
     dispatchFilter({ type: 'update external' });
     if (filterMobileOpen) {
       setFilterMobileOpen(false);

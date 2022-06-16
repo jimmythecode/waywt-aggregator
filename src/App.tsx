@@ -9,7 +9,8 @@ import NavBar from './components/NavBar';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import GlobalContext from './Context/GlobalContext';
 import UserContext from './Context/UserContext';
-import LoggingContextProvider from './Context/LoggingContext';
+import LoggingContextProvider from './Context/LoggingContext/LoggingContext';
+// import LoggingContextProvider from './Context/LoggingContext';
 
 // Google Analytics set up
 const googleAnalyticsTrackingCode = process.env.REACT_APP_GA_TRACKING_CODE3;

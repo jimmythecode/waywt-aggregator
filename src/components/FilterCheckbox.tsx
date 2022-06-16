@@ -1,6 +1,7 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
 import React, { useContext } from 'react';
-import { LoggingContext } from '../Context/LoggingContext';
+import { useLocation } from 'react-router-dom';
+import { LoggingContext } from '../Context/LoggingContext/LoggingContext';
 import { SearchContext } from '../Context/SearchContext';
 import { FilterTypeLabelsCheckbox } from '../Reducers/filterReducer';
 import { logAdminExternal } from '../utils/logging';
@@ -12,11 +13,8 @@ function FilterCheckbox({
   thisLabel: string;
   filterLabel: FilterTypeLabelsCheckbox;
 }) {
+  const location = useLocation();
   const {
-    // styleFilterObject,
-    // setStyleFilterObject,
-    // initialFilteredPostsObjects,
-    // updateFilterUpdateTimestamps,
     fetchedPosts,
     filterState,
     dispatchFilter,
@@ -91,7 +89,7 @@ function FilterCheckbox({
       label={`${filterLabel === "users" ? "u/" : ""}${thisLabel} (${numberOfTagInstances})`}
       checked={localCheckedState}
       onChange={(event: React.SyntheticEvent<Element, Event>, checked: boolean) => {
-        addLog(`Clicked Checkbox for '${thisLabel}'`);
+        addLog(`Clicked Checkbox for '${thisLabel}'`, location.pathname);
         setLocalCheckedState(checked);
       }}
     />

@@ -14,6 +14,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { useLocation } from 'react-router-dom';
 import Markdown from './Markdown';
 import HeightSVG from '../icons/height-svgrepo-com.svg';
 import chestSVG from '../icons/chest.svg';
@@ -23,11 +24,12 @@ import { ReactComponent as AutumnLeafSVG } from '../icons/autumn.svg';
 import { ReactComponent as ScalesSVG } from '../icons/scales.svg';
 import { PostObject } from '../utils/dataObjects';
 import { UserContext } from '../Context/UserContext';
-import { LoggingContext } from '../Context/LoggingContext';
 import UserInfoScrollDialog from './UserInfoScrollingDialog';
 import PostImages from './PostImages';
+import { LoggingContext } from '../Context/LoggingContext/LoggingContext';
 
 function VoteSidePanel() {
+  const location = useLocation();
   const { addLog } = useContext(LoggingContext);
   const [thumbUpState, setThumbUpState] = React.useState(false);
   const [thumbDownState, setThumbDownState] = React.useState(false);
@@ -47,7 +49,7 @@ function VoteSidePanel() {
           onClick={() => {
             setThumbUpState((prev) => !prev);
             setThumbDownState(false);
-            addLog('clicked thumb up');
+            addLog('clicked thumb up', location.pathname);
           }}
         >
           <ThumbUpOffAltIcon color={thumbUpState ? 'success' : 'disabled'} />
@@ -57,7 +59,7 @@ function VoteSidePanel() {
           onClick={() => {
             setThumbDownState((prev) => !prev);
             setThumbUpState(false);
-            addLog('clicked thumb down');
+            addLog('clicked thumb down', location.pathname);
           }}
         >
           <ThumbDownOffAltIcon color={thumbDownState ? 'error' : 'disabled'} />
@@ -69,6 +71,7 @@ function VoteSidePanel() {
 
 // eg: "posted by /u/jimmythecode 2 days ago"
 function HeaderInfo({ postObject }: { postObject: PostObject }) {
+  const location = useLocation();
   const { addLog } = useContext(LoggingContext);
   const countryCode =
     typeof postObject?.country === 'string' && postObject.country.length > 0
@@ -89,7 +92,7 @@ function HeaderInfo({ postObject }: { postObject: PostObject }) {
       <span>
         Posted by{' '}
         <a
-          onPointerDown={() => addLog('onPointerDown u/username link')}
+          onPointerDown={() => addLog('onPointerDown u/username link', location.pathname)}
           target='_blank'
           rel='noreferrer'
           href={`https://www.reddit.com/user/${postObject.author}`}
@@ -116,6 +119,7 @@ function HeaderInfo({ postObject }: { postObject: PostObject }) {
 }
 
 function PostInfo({ postObject }: { postObject: PostObject }) {
+  const location = useLocation();
   const { addLog } = useContext(LoggingContext);
   const [postTextHiddenState, setPostTextHiddenState] = React.useState(false);
   return (
@@ -168,7 +172,7 @@ function PostInfo({ postObject }: { postObject: PostObject }) {
             }}
             onClick={() => {
               setPostTextHiddenState(true);
-              addLog('clicked expand markdown post line');
+              addLog('clicked expand markdown post line', location.pathname);
             }}
           >
             <div />
@@ -195,6 +199,7 @@ function PostInfo({ postObject }: { postObject: PostObject }) {
 }
 
 function StyleChips({ postObject }: { postObject: PostObject }) {
+  const location = useLocation();
   const { addLog } = useContext(LoggingContext);
   const arrayOfChips = postObject.tags || [];
   return (
@@ -240,7 +245,7 @@ function StyleChips({ postObject }: { postObject: PostObject }) {
             sx={{
               cursor: 'pointer',
             }}
-            onClick={() => addLog('clicked a chip')}
+            onClick={() => addLog('clicked a chip', location.pathname)}
           />
         ))}
         {arrayOfChips.length === 0 && (
@@ -433,8 +438,9 @@ function UserInfo({
 }) {
   // Panel with Height, Chest, Waist measures and Season
   // const [infoModalOpen, setInfoModalOpen] = React.useState(false);
-  const { userDetails } = React.useContext(UserContext);
+  const location = useLocation();
   const { addLog } = useContext(LoggingContext);
+  const { userDetails } = React.useContext(UserContext);
   return (
     <Box
       sx={{
@@ -450,7 +456,7 @@ function UserInfo({
         cursor: 'pointer',
       }}
       onClick={() => {
-        addLog('clicked userInfo panel');
+        addLog('clicked userInfo panel', location.pathname);
         setModalOpen(true);
       }}
     >
@@ -521,7 +527,7 @@ function UserInfo({
             />
           </Box>
           <Box // Season Icon
-            onMouseEnter={() => addLog('onMouseEnter over SeasonIcon')}
+            onMouseEnter={() => addLog('onMouseEnter over SeasonIcon', location.pathname)}
           >
             <SeasonIcon season={postObject.season} />
           </Box>

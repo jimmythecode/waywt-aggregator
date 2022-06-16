@@ -10,7 +10,8 @@ import {
 } from '@mui/material';
 import Fuse from 'fuse.js';
 import React, { SyntheticEvent, useContext, useState } from 'react';
-import { LoggingContext } from '../Context/LoggingContext';
+import { useLocation } from 'react-router-dom';
+import { LoggingContext } from '../Context/LoggingContext/LoggingContext';
 import {
   FilterAction,
   FilterObjectCheckbox,
@@ -27,7 +28,7 @@ function FilterCheckboxes({
   dispatchFilter: React.Dispatch<FilterAction>;
   filterLabel: FilterTypeLabelsCheckbox;
 }) {
-  // const { updateFilterUpdateTimestamps } = useContext(SearchContext);
+  const location = useLocation();
   const { addLog } = useContext(LoggingContext);
   const [showTextInput, setShowTextInput] = useState(false);
   const [textSearchInputState, setTextSearchInputState] = useState('');
@@ -63,7 +64,7 @@ function FilterCheckboxes({
               <Checkbox // select all checkbox
                 checked={!Object.values(filterObject).some((x) => x.checked === false)}
                 onChange={(event: SyntheticEvent<Element, Event>, checked: boolean) => {
-                  addLog(`Clicked Checkbox for '${'Select All'}'`);
+                  addLog(`Clicked Checkbox for '${'Select All'}'`, location.pathname);
                   dispatchFilter({
                     type: 'click select all checkbox',
                     filterLabel,

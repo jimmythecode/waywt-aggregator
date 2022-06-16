@@ -2,20 +2,17 @@ import React, { SyntheticEvent, useContext, useState } from 'react';
 import {
   Box,
   Button,
-  Checkbox,
   Collapse,
-  Divider,
-  FormControlLabel,
-  FormGroup,
   Toolbar,
 } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { useLocation } from 'react-router-dom';
 import { SearchContext } from '../Context/SearchContext';
-import { LoggingContext } from '../Context/LoggingContext';
 import FilterCheckboxes from './FilterCheckboxes';
 import { logAdminExternal } from '../utils/logging';
 import { GlobalContext } from '../Context/GlobalContext';
 import SizeSlider from './SizeSlider';
+import { LoggingContext } from '../Context/LoggingContext/LoggingContext';
 
 function UpdateResultsButton() {
   const {
@@ -78,6 +75,7 @@ function UpdateResultsButton() {
 }
 
 function Filter({ origin }: { origin: string }) {
+  const location = useLocation();
   const { filterState, dispatchFilter } = useContext(SearchContext);
   const { filterMobileOpen } = React.useContext(GlobalContext);
   const { addLog } = useContext(LoggingContext);
@@ -96,7 +94,7 @@ function Filter({ origin }: { origin: string }) {
   }
 
   function clickDropdownButton(label: 'styles' | 'users' | 'colorSeasons' | 'sliders') {
-    addLog(`Clicked filter dropdown button for: ${label}`);
+    addLog(`Clicked filter dropdown button for: ${label}`, location.pathname);
     setDropDownOpen((prev) => ({ ...prev, [label]: !prev[label] }));
   }
 
