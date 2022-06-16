@@ -13,6 +13,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Markdown from './Markdown';
 import HeightSVG from '../icons/height-svgrepo-com.svg';
 import chestSVG from '../icons/chest.svg';
@@ -24,6 +25,7 @@ import { PostObject } from '../utils/dataObjects';
 import { UserContext } from '../Context/UserContext';
 import { LoggingContext } from '../Context/LoggingContext';
 import UserInfoScrollDialog from './UserInfoScrollingDialog';
+import PostImages from './PostImages';
 
 function VoteSidePanel() {
   const { addLog } = useContext(LoggingContext);
@@ -90,9 +92,9 @@ function HeaderInfo({ postObject }: { postObject: PostObject }) {
           onPointerDown={() => addLog('onPointerDown u/username link')}
           target='_blank'
           rel='noreferrer'
-          href={`https://www.reddit.com/user/${postObject.username}`}
+          href={`https://www.reddit.com/user/${postObject.author}`}
         >
-          u/{postObject.username}
+          u/{postObject.author}
         </a>
       </span>
       <span> 2 days ago</span>
@@ -184,7 +186,7 @@ function PostInfo({ postObject }: { postObject: PostObject }) {
               whiteSpace: 'normal',
             }}
           >
-            <Markdown markdown={postObject.postText} />
+            <Markdown markdown={postObject.body} />
           </Box>
         </Box>
       </Collapse>
@@ -276,20 +278,20 @@ const seasonSVGObject = {
   summer: <WbSunnyIcon fill='currentColor' />,
 };
 
-export function SeasonIcon({ season }: { season: keyof typeof seasonCssColor }) {
+export function SeasonIcon({ season }: { season: keyof typeof seasonCssColor | undefined }) {
   return (
     <Box
       sx={{
         display: 'flex',
         alignItems: 'center',
         color: 'white',
-        backgroundColor: seasonCssColor[season],
+        backgroundColor: season ? seasonCssColor[season] : 'grey',
         borderRadius: '50%',
         padding: '4px',
       }}
       title={season}
     >
-      {seasonSVGObject[season]}
+      {season ? seasonSVGObject[season] : <HelpOutlineIcon />}
     </Box>
   );
 }
@@ -555,12 +557,10 @@ function InfoSection({
 }
 
 function ResultCard({ postObject }: { postObject: PostObject }) {
-  const imageUrl = postObject.images[0];
-  const imageUrlExtention = imageUrl.split('.').pop() === 'jpg' ? imageUrl : `${imageUrl}.jpg`;
   const [modalOpen, setModalOpen] = React.useState(false);
   return (
     <Box sx={{ minWidth: 275, marginBottom: 1.5 }}>
-         <UserInfoScrollDialog postObject={postObject} open={modalOpen} setOpen={setModalOpen} />
+      <UserInfoScrollDialog postObject={postObject} open={modalOpen} setOpen={setModalOpen} />
       <Card
         variant='outlined'
         sx={{
@@ -581,42 +581,7 @@ function ResultCard({ postObject }: { postObject: PostObject }) {
           <VoteSidePanel />
           <InfoSection postObject={postObject} modalOpen={modalOpen} setModalOpen={setModalOpen} />
         </Box>
-        <Box // Post Images
-          sx={{
-            backgroundColor: '#3c424b',
-            textAlign: 'center',
-            overflow: 'hidden',
-            gridColumn: {
-              // xs: 1,
-              md: 2,
-            },
-            gridRow: {
-              xs: 1,
-            },
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            // gridColumnStart: 1,
-          }}
-          component='a'
-          href={postObject.postUrl.length > 0 ? postObject.postUrl : postObject.images[0]}
-          target='_blank'
-          rel='noreferrer'
-        >
-          <Box
-            component='img'
-            sx={{
-              height: {
-                xs: 300,
-                md: 350,
-                lg: 400,
-              },
-              verticalAlign: 'middle',
-            }}
-            alt='postImage'
-            src={imageUrlExtention}
-          />
-        </Box>
+        <PostImages postObject={postObject} />
       </Card>
     </Box>
   );

@@ -15,8 +15,9 @@ function FilterCheckbox({
   const {
     // styleFilterObject,
     // setStyleFilterObject,
-    initialFilteredPostsObjects,
+    // initialFilteredPostsObjects,
     // updateFilterUpdateTimestamps,
+    fetchedPosts,
     filterState,
     dispatchFilter,
   } = useContext(SearchContext);
@@ -62,14 +63,14 @@ function FilterCheckbox({
   React.useEffect(() => {
     async function numberOfResultsWithThisTag(thisLabelString: string): Promise<number> {
       if (filterLabel === 'styles') {
-        return initialFilteredPostsObjects.filter((thisObj) =>
-          thisObj.tags.includes(thisLabelString)
+        return fetchedPosts.filter((thisObj) =>
+        thisObj.tags !== undefined && thisObj.tags.includes(thisLabelString)
         ).length;
       } if (filterLabel === 'users') {
-        return initialFilteredPostsObjects.filter((thisObj) => thisObj.username === thisLabelString)
+        return fetchedPosts.filter((thisObj) => thisObj.author === thisLabelString)
           .length;
       }  if (filterLabel === 'colorSeasons') {
-        return initialFilteredPostsObjects.filter((thisObj) => thisObj.season === thisLabelString)
+        return fetchedPosts.filter((thisObj) => thisObj.season === thisLabelString)
           .length;
       } return 0
     }

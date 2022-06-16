@@ -59,7 +59,6 @@ export default function SearchPage() {
           component='main'
           sx={{
             flexGrow: 1,
-            // TODO: Padding no good on mobile
             sm: { p: 3 },
             width: { md: `calc(100% - ${drawerWidth}px)` },
             backgroundColor: '#E7EBF0',

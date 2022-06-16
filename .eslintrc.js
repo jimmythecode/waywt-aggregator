@@ -25,7 +25,7 @@ module.exports = {
         'prettier',
     ],
     rules: {
-        'no-use-before-define': 'off',
+        'no-use-before-define': 'warn',
         '@typescript-eslint/no-use-before-define': ['error'],
         'react/jsx-filename-extension': ['warn', { extensions: ['.tsx'] }],
         'import/extensions': [
@@ -36,12 +36,12 @@ module.exports = {
                 tsx: 'never',
             },
         ],
-        'no-shadow': 'off',
+        'no-shadow': 'warn',
         '@typescript-eslint/no-shadow': ['error'],
         indent: 'off',
         // 'prettier/prettier': ['warn'],
         'no-unused-expressions': ['warn'],
-        "react/jsx-props-no-spreading": ["off"],
+        "react/jsx-props-no-spreading": ["warn"],
         "import/prefer-default-export": ["warn"],
         "react/jsx-curly-brace-presence": ["warn"]
     },

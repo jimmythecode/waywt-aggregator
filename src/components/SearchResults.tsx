@@ -14,10 +14,12 @@ function BaseSearchResults({
   internalFilteredPosts: PostObject[];
   timestamps: TimestampsObject;
 }) {
+  console.log({ externalFilteredPosts: externalFilteredPosts.map((x) => x.imageUrls) });
+
   return (
     <Box>
       {externalFilteredPosts.map((thisResult) => (
-        <ResultCard key={thisResult.postId} postObject={thisResult} />
+        <ResultCard key={thisResult.commentId} postObject={thisResult} />
       ))}
     </Box>
   );
@@ -49,7 +51,8 @@ function comparisonFunction(
   const arrayIdsAreSame =
     prevProps.externalFilteredPosts.length === nextProps.externalFilteredPosts.length &&
     prevProps.externalFilteredPosts.filter(
-      (thisPrevObj, index) => thisPrevObj.postId !== nextProps.externalFilteredPosts[index].postId
+      (thisPrevObj, index) =>
+        thisPrevObj.commentId !== nextProps.externalFilteredPosts[index].commentId
     ).length === 0;
   return arrayIdsAreSame;
 }
@@ -65,11 +68,6 @@ function SearchResults() {
       internalFilteredPosts={filterState.internalFilteredPosts}
       timestamps={filterState.timestamps}
     />
-    // <Box>
-    //   {filteredPosts.map((thisResult) => (
-    //     <ResultCard key={thisResult.postId} postObject={thisResult} />
-    //   ))}
-    // </Box>
   );
 }
 

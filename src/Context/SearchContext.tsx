@@ -1,34 +1,35 @@
-import React, { useContext, useState } from 'react';
+import { useSnackbar } from 'notistack';
+import React, { useContext, useEffect, useState } from 'react';
 import {
+  emptyFilterState,
   FilterAction,
   FilterObjectCheckbox,
   filterReducer,
   FilterState,
+  getInitialReducerState,
 } from '../Reducers/filterReducer';
-import { PostObject, postsObjects } from '../utils/dataObjects';
+import { PostObject } from '../utils/dataObjects';
+import { fetchGetBackEnd } from '../utils/fetchRequests';
+import {
+  getPostsArrayFromLocalStorage,
+  setPostsArrayFromLocalStorage,
+} from '../utils/localStorageActions';
+import { getSecondsDifference } from '../utils/timeFunctions';
 import { GlobalContext } from './GlobalContext';
 import { LoggingContext } from './LoggingContext';
-
-function getStringOfIds(postsObject: PostObject[]): string {
-  return postsObject
-    .map((thisObj) => thisObj.postId)
-    .sort()
-    .toString();
-}
+import {
+  getInitialColorSeasonsFilterObject,
+  getInitialPostsArrayIds,
+  getInitialStyleFilterObject,
+  getInitialUsersFilterObject,
+  reducedUniqueStyles,
+} from './searchContextFunctions';
 
 export type FilterLabel = 'any' | 'styleTags' | 'updateResults';
 
 interface SearchContextInterface {
-  initialFilteredPostsObjects: PostObject[];
-  // filteredPostsInternal: PostObject[];
-  // setFilteredPostsInternal: React.Dispatch<React.SetStateAction<PostObject[]>>;
-  // filteredPosts: PostObject[];
-  // setFilteredPosts: React.Dispatch<React.SetStateAction<PostObject[]>>;
-  // styleFilterObject: FilterObject;
-  // setStyleFilterObject: React.Dispatch<React.SetStateAction<FilterObject>>;
+  fetchedPosts: PostObject[];
   updateResults: () => void;
-  // resultsUpToDate: boolean;
-  // updateFilterUpdateTimestamps: (filterLabel: FilterLabel) => void;
   filterState: FilterState;
   dispatchFilter: React.Dispatch<FilterAction>;
 }
@@ -38,127 +39,78 @@ export const SearchContext = React.createContext<SearchContextInterface>(
 );
 
 export default function SearchContextProvider(props: { children: React.ReactNode }) {
+  const { enqueueSnackbar } = useSnackbar();
   // USECONTEXT
   const { addLog } = useContext(LoggingContext);
+  const { timestamps, setTimestamps } = useContext(GlobalContext);
   // USESTATE
-  const initialFilteredPostsObjects = postsObjects;
-  const [filteredPostsInternal, setFilteredPostsInternal] = useState(initialFilteredPostsObjects);
-  const [filteredPosts, setFilteredPosts] = useState(initialFilteredPostsObjects);
-  // const [resultsUpToDate, setResultsUpToDate] = useState(false);
-
-  // Take all of the tag string labels from each post object and create an array of unique, sorted labels for the filter checkboxes
-  const reducedUniqueStyles = React.useMemo(
-    () =>
-      [
-        ...new Set(
-          initialFilteredPostsObjects.reduce<string[]>((prev, cur) => cur.tags.concat(prev), [])
-        ),
-      ].sort(),
-    []
-  );
-  const initialStyleFilterObject = React.useMemo(
-    () =>
-      reducedUniqueStyles.reduce<FilterObjectCheckbox>((prev, cur) => {
-        const returnObj = { ...prev };
-        returnObj[cur] = { checked: false, disabled: false };
-        return returnObj;
-      }, {}),
-    []
-  );
-
-  // Create filter object for users from the array of posts.
-  const initialUsersFilterObject = React.useMemo(
-    () =>
-      [...new Set(initialFilteredPostsObjects.map((thisPost) => thisPost.username))]
-        .sort()
-        .reduce<FilterObjectCheckbox>((prev, cur) => {
-          const returnObj = { ...prev };
-          returnObj[cur] = { checked: false, disabled: false };
-          return returnObj;
-        }, {}),
-    []
-  );
-
-  // Create filter object for colorSeasons from the array of posts.
-  const initialColorSeasonsFilterObject = React.useMemo(
-    () =>
-      [...new Set(initialFilteredPostsObjects.map((thisPost) => thisPost.season))]
-        .sort()
-        .reduce<FilterObjectCheckbox>((prev, cur) => {
-          const returnObj = { ...prev };
-          returnObj[cur] = { checked: false, disabled: false };
-          return returnObj;
-        }, {}),
-    []
-  );
-
-  const initialPostsArrayIds = React.useMemo(
-    () => initialFilteredPostsObjects.map((x) => x.postId),
-    initialFilteredPostsObjects
-  );
-
-  const initialReducerState: FilterState = {
-    initialArrayOfPosts: initialFilteredPostsObjects,
-    internalFilteredPosts: initialFilteredPostsObjects,
-    externalFilteredPosts: initialFilteredPostsObjects,
-    filterCheckboxObjects: {
-      styles: initialStyleFilterObject,
-      users: initialUsersFilterObject,
-      colorSeasons: initialColorSeasonsFilterObject,
+  const [fetchedPosts, setFetchedPosts] = useState<PostObject[]>(getPostsArrayFromLocalStorage());
+  const [filterState, dispatchFilter] = React.useReducer(
+    filterReducer,
+    {
+      fetchedPosts,
+      initialColorSeasonsFilterObject: getInitialColorSeasonsFilterObject(fetchedPosts),
+      initialPostsArrayIds: getInitialPostsArrayIds(fetchedPosts),
+      initialStyleFilterObject: getInitialStyleFilterObject(reducedUniqueStyles(fetchedPosts)),
+      initialUsersFilterObject: getInitialUsersFilterObject(fetchedPosts),
     },
-    filterSliderObjects: {
-      height: {
-        min: 140,
-        max: 240,
-        disabled: false,
-      },
-      chest: {
-        min: 40,
-        max: 160,
-        disabled: false,
-      },  
-      waist: {
-        min: 40,
-        max: 160,
-        disabled: false,
-      },
-    },
-    postIdArrays: {
-      styles: initialPostsArrayIds,
-      users: initialPostsArrayIds,
-      height: initialPostsArrayIds,
-      chest: initialPostsArrayIds,
-      waist: initialPostsArrayIds,
-      colorSeasons: initialPostsArrayIds,
-    },
-    timestamps: {
-      styles: new Date().toUTCString(),
-      users: new Date().toUTCString(),
-      height: new Date().toUTCString(),
-      chest: new Date().toUTCString(),
-      waist: new Date().toUTCString(),
-      colorSeasons: new Date().toUTCString(),
-      internalFilteredPosts: new Date().toUTCString(),
-      externalFilteredPosts: new Date().toUTCString(),
-    },
-  };
-
-  const [filterState, dispatchFilter] = React.useReducer(filterReducer, initialReducerState);
+    getInitialReducerState
+  );
   const { filterMobileOpen, setFilterMobileOpen } = React.useContext(GlobalContext);
 
+  // On Page load, fetch posts from back end.
+  useEffect(() => {
+    // Only fetch if there are no posts, or we haven't fetched in the last 10 mins.
+    console.log({
+      length: fetchedPosts.length === 0,
+      timestamps: timestamps.fetchPosts === null,
+      getSecondsDifference:
+        timestamps.fetchPosts === null
+          ? "cn't perform"
+          : getSecondsDifference(timestamps.fetchPosts, new Date().toUTCString()) / 60 / 10 > 10,
+    });
+
+    if (
+      fetchedPosts.length === 0 ||
+      timestamps.fetchPosts === null ||
+      getSecondsDifference(timestamps.fetchPosts, new Date().toUTCString()) / 60 / 10 > 10
+    ) {
+      fetchGetBackEnd('/posts')
+        .then((response) => {
+          if (response.status < 200 || response.status > 299) {
+            enqueueSnackbar(
+              `Response status ${response.status} when trying to retrieve WAYWT posts`,
+              { variant: 'error' }
+            );
+            return { success: false };
+          }
+          return response.json();
+        })
+        .then((parsed) => {
+          if (parsed.success === false) return;
+          setFetchedPosts(parsed.waywtComments);
+          setPostsArrayFromLocalStorage(parsed.waywtComments);
+          setTimestamps((prev) => ({ ...prev, fetchPosts: new Date().toUTCString() }));
+          dispatchFilter({ type: 'update from fetch request', newArray: parsed.waywtComments });
+          enqueueSnackbar(`Latest posts have been updated from the database`, {
+            variant: 'success',
+          });
+        });
+    }
+  }, []);
 
   function updateResults(): void {
     addLog('Clicked Update Results Button');
     dispatchFilter({ type: 'update external' });
-    if(filterMobileOpen){
-      setFilterMobileOpen(false)
+    if (filterMobileOpen) {
+      setFilterMobileOpen(false);
     }
     // setFilteredPosts(filteredPostsInternal);
   }
 
   const value = React.useMemo(
     () => ({
-      initialFilteredPostsObjects,
+      fetchedPosts,
       updateResults,
       // resultsUpToDate,
       filterState,
@@ -166,7 +118,8 @@ export default function SearchContextProvider(props: { children: React.ReactNode
     }),
     [
       // resultsUpToDate,
-       filterState]
+      filterState,
+    ]
   );
 
   return <SearchContext.Provider value={value} {...props} />;

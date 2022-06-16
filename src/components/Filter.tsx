@@ -20,15 +20,20 @@ import SizeSlider from './SizeSlider';
 function UpdateResultsButton() {
   const {
     updateResults,
-    initialFilteredPostsObjects,
+    // initialFilteredPostsObjects,
+    fetchedPosts,
     filterState,
   } = useContext(SearchContext);
   const [resultsUpToDate, setResultsUpToDate] = useState(true);
 
-
   // Update state to determine whether Update Results button is disabled
   React.useEffect(() => {
     const { externalFilteredPosts, internalFilteredPosts } = filterState;
+    logAdminExternal({
+      location: 'resultsUpToDate USEEFFECT',
+      externalFilteredPoststimestamp: filterState.timestamps.externalFilteredPosts,
+      internalFilteredPoststimestamp: filterState.timestamps.internalFilteredPosts,
+    });
     // We want to setResultsUpToDate(false) if there has been a change to the internalFilteredPosts that hasn't been updated in the externalFilteredPosts
     if (resultsUpToDate) {
       if (
@@ -39,7 +44,7 @@ function UpdateResultsButton() {
         (externalFilteredPosts.length !== internalFilteredPosts.length ||
           // Third, iterate through the arrays to check if they are the different. If they are different, the results are not up to date and we want to setResultsUpToDate to false
           externalFilteredPosts.filter(
-            (thisExtObj, index) => thisExtObj.postId !== internalFilteredPosts[index].postId
+            (thisExtObj, index) => thisExtObj.commentId !== internalFilteredPosts[index].commentId
           ).length !== 0)
       ) {
         setResultsUpToDate(false);
@@ -50,7 +55,7 @@ function UpdateResultsButton() {
       externalFilteredPosts.length === internalFilteredPosts.length &&
       // Third, iterate through the arrays to check if they are the different. If they are different, the results are not up to date and we want to setResultsUpToDate to false
       externalFilteredPosts.filter(
-        (thisExtObj, index) => thisExtObj.postId !== internalFilteredPosts[index].postId
+        (thisExtObj, index) => thisExtObj.commentId !== internalFilteredPosts[index].commentId
       ).length === 0
     ) {
       setResultsUpToDate(true);
@@ -67,16 +72,13 @@ function UpdateResultsButton() {
     >
       {`${resultsUpToDate ? 'Results Up To Date' : `Update Results`} ${
         Object.keys(filterState.internalFilteredPosts).length
-      }/${Object.keys(initialFilteredPostsObjects).length}`}
+      }/${Object.keys(fetchedPosts).length}`}
     </Button>
   );
 }
 
 function Filter({ origin }: { origin: string }) {
-  const {
-    filterState,
-    dispatchFilter,
-  } = useContext(SearchContext);
+  const { filterState, dispatchFilter } = useContext(SearchContext);
   const { filterMobileOpen } = React.useContext(GlobalContext);
   const { addLog } = useContext(LoggingContext);
   const [dropDownOpen, setDropDownOpen] = useState({
